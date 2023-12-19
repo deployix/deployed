@@ -43,7 +43,7 @@ func initRun(cmd *cobra.Command, args []string) error {
 }
 
 func generateWorkingDir(force bool) error {
-	if _, err := os.Stat(configs.Cfg.GetDirectoryPath()); err == nil && !force { //todo: sort out path
+	if _, err := os.Stat(configs.Cfg.GetDirectoryPath()); err == nil && !force {
 		// Dir exists and we are not forcing the creation
 		return fmt.Errorf("dir %s already exists. Use --force to overwrite", configs.Cfg.GetDirectoryPath())
 	} else {
