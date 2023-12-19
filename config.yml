@@ -1,0 +1,6 @@
+path: /Users/tony/Documents/github/deployix/deployed
+dirname: .deployed
+configfilename: config.yml
+channelsfilename: ""
+promotionsfilename: ""
+versionsfilename: ""
