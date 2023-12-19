@@ -9,7 +9,7 @@ import (
 )
 
 func init() {
-	rootCmd.AddCommand(promotion)
+	rootCmd.AddCommand(promotions)
 }
 
 var Promos Promotions
@@ -21,15 +21,15 @@ type Promotions struct {
 type Promotion struct {
 }
 
-var promotion = &cobra.Command{
-	Use:     "promotion",
-	Aliases: []string{"promo"},
+var promotions = &cobra.Command{
+	Use:     "promotions",
+	Aliases: []string{"promos"},
 	Short:   "",
 	Long:    "",
-	Run:     promotionRun,
+	Run:     promotionsRun,
 }
 
-func promotionRun(cmd *cobra.Command, args []string) {
+func promotionsRun(cmd *cobra.Command, args []string) {
 }
 
 func CreatePromotionsFile() error {

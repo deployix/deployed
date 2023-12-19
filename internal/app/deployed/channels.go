@@ -8,40 +8,51 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-var channels Channels
+var chs Channels
 
 const ()
 
 type Channels struct {
+	Channels map[string]Channel
+}
+
+type Channel struct {
 }
 
 func init() {
-	rootCmd.AddCommand(channel)
+	rootCmd.AddCommand(channels)
 }
 
-var channel = &cobra.Command{
-	Use:     "channel",
-	Aliases: []string{"ch"},
+var channels = &cobra.Command{
+	Use:     "channels",
+	Aliases: []string{"chs"},
 	Short:   "",
 	Long:    "",
-	Run:     channelRun,
+	Run:     channelsRun,
 }
 
-func channelRun(cmd *cobra.Command, args []string) {
+func channelsRun(cmd *cobra.Command, args []string) {
 }
 
 func CreateChannelsFile() error {
-	channelsYmlData, err := yaml.Marshal(&channels)
+	channelsYmlData, err := yaml.Marshal(&chs)
 	if err != nil {
 		return err
 	}
 
 	f, err := os.Create(configs.Cfg.GetChannelsPath())
-	defer f.Close()
 	if err != nil {
 		return err
 	}
-	f.Write(channelsYmlData)
-	f.Sync()
+	defer f.Close()
+
+	_, err = f.Write(channelsYmlData)
+	if err != nil {
+		return err
+	}
+
+	if err = f.Sync(); err != nil {
+		return err
+	}
 	return nil
 }
