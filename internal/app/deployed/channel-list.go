@@ -10,7 +10,7 @@ import (
 const ()
 
 func init() {
-	channels.AddCommand(list)
+	channel.AddCommand(list)
 }
 
 var list = &cobra.Command{

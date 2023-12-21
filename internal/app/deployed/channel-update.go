@@ -10,7 +10,7 @@ import (
 const ()
 
 func init() {
-	channels.AddCommand(update)
+	channel.AddCommand(update)
 }
 
 var update = &cobra.Command{
@@ -43,7 +43,7 @@ func channelsUpdateRun(cmd *cobra.Command, args []string) error {
 
 	// update file
 	if err := CreateChannelsFile(); err != nil {
-		return fmt.Errorf("Unable to update channels. Try running `deployed init` to initialize")
+		return fmt.Errorf("Unable to update channel. Try running `deployed init` to initialize")
 	}
 
 	return nil

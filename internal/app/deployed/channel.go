@@ -14,23 +14,23 @@ var chs Channels
 const ()
 
 type Channels struct {
-	Channels map[string]Channel `group:"channel"`
+	Channels map[string]Channel
 }
 
 type Channel struct {
-	Name string `flag:"n name" desc:"Channel name" required:"yes"`
+	Name        string
+	Description string
 }
 
 func init() {
-	rootCmd.AddCommand(channels)
+	rootCmd.AddCommand(channel)
 }
 
-var channels = &cobra.Command{
-	Use:     "channels",
-	Aliases: []string{"chs"},
-	Short:   "",
-	Long:    "",
-	Run:     channelsRun,
+var channel = &cobra.Command{
+	Use:   "channel",
+	Short: "",
+	Long:  "",
+	Run:   channelsRun,
 }
 
 func channelsRun(cmd *cobra.Command, args []string) {

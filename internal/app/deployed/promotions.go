@@ -19,6 +19,7 @@ type Promotions struct {
 }
 
 type Promotion struct {
+	Name string `short:"n" long:"name" `
 }
 
 var promotions = &cobra.Command{

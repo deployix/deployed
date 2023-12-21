@@ -10,7 +10,7 @@ import (
 const ()
 
 func init() {
-	channels.AddCommand(del)
+	channel.AddCommand(del)
 }
 
 var del = &cobra.Command{
