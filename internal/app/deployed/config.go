@@ -23,7 +23,6 @@ func init() {
 			log.Fatalf("Unmarshal: %v", err)
 		}
 	}
-
 }
 
 var config = &cobra.Command{

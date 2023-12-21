@@ -1,6 +1,7 @@
 package deployed
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/deployix/deployed/configs"
@@ -13,10 +14,11 @@ var chs Channels
 const ()
 
 type Channels struct {
-	Channels map[string]Channel
+	Channels map[string]Channel `group:"channel"`
 }
 
 type Channel struct {
+	Name string `flag:"n name" desc:"Channel name" required:"yes"`
 }
 
 func init() {
@@ -32,6 +34,7 @@ var channels = &cobra.Command{
 }
 
 func channelsRun(cmd *cobra.Command, args []string) {
+	fmt.Println("RUNNNING")
 }
 
 func CreateChannelsFile() error {
@@ -55,4 +58,28 @@ func CreateChannelsFile() error {
 		return err
 	}
 	return nil
+}
+
+func getChannels() error {
+	if _, err := os.Stat(configs.Cfg.GetChannelsPath()); err == nil {
+		yamlFile, err := os.ReadFile(configs.Cfg.GetChannelsPath())
+		if err != nil {
+			return err
+		}
+		err = yaml.Unmarshal(yamlFile, &chs)
+		if err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("Channels config file does not exists. Make sure the file %s exists", configs.Cfg.GetChannelsPath())
+	}
+	return nil
+}
+
+// validate config file for channels exists before trying to manipulate
+func channelsFileExists() bool {
+	if _, err := os.Stat(configs.Cfg.GetChannelsPath()); err != nil {
+		return false
+	}
+	return true
 }
