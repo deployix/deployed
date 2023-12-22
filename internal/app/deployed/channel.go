@@ -24,13 +24,18 @@ type Channel struct {
 
 func init() {
 	rootCmd.AddCommand(channel)
+
+	// try to get initialize channels if config file exists.
+	// if not don't error out
+	_ = getChannels()
 }
 
 var channel = &cobra.Command{
-	Use:   "channel",
-	Short: "",
-	Long:  "",
-	Run:   channelsRun,
+	Use:          "channel",
+	Short:        "",
+	Long:         "",
+	Run:          channelsRun,
+	SilenceUsage: true,
 }
 
 func channelsRun(cmd *cobra.Command, args []string) {
@@ -60,6 +65,14 @@ func CreateChannelsFile() error {
 	return nil
 }
 
+// ChannelExists validates a channel exists and returns true is found otherwise returns false
+func ChannelExists(name string) bool {
+	if _, found := chs.Channels[name]; found {
+		return true
+	}
+	return false
+}
+
 func getChannels() error {
 	if _, err := os.Stat(configs.Cfg.GetChannelsPath()); err == nil {
 		yamlFile, err := os.ReadFile(configs.Cfg.GetChannelsPath())
@@ -74,12 +87,4 @@ func getChannels() error {
 		return fmt.Errorf("Channels config file does not exists. Make sure the file %s exists", configs.Cfg.GetChannelsPath())
 	}
 	return nil
-}
-
-// validate config file for channels exists before trying to manipulate
-func channelsFileExists() bool {
-	if _, err := os.Stat(configs.Cfg.GetChannelsPath()); err != nil {
-		return false
-	}
-	return true
 }

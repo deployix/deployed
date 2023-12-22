@@ -2,7 +2,10 @@ module github.com/deployix/deployed
 
 go 1.20
 
-require github.com/spf13/cobra v1.8.0
+require (
+	github.com/adhocore/gronx v1.6.6
+	github.com/spf13/cobra v1.8.0
+)
 
 require (
 	github.com/fsnotify/fsnotify v1.7.0 // indirect

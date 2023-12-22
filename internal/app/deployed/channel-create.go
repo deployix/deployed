@@ -17,15 +17,16 @@ func init() {
 		os.Exit(1)
 	}
 
-	// create required channel description flag
+	// create channel description flag
 	create.Flags().StringVarP(&channelsCreateDescription, "desc", "d", "", "channel description")
 
 	channel.AddCommand(create)
 }
 
 var create = &cobra.Command{
-	Use:  "create",
-	RunE: channelCreateRun,
+	Use:          "create",
+	RunE:         channelCreateRun,
+	SilenceUsage: true,
 }
 
 func channelCreateRun(cmd *cobra.Command, args []string) error {

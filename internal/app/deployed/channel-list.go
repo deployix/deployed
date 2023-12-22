@@ -14,9 +14,10 @@ func init() {
 }
 
 var list = &cobra.Command{
-	Use:  "list",
-	Args: cobra.ExactArgs(0),
-	RunE: channelsListRun,
+	Use:          "list",
+	Args:         cobra.ExactArgs(0),
+	RunE:         channelsListRun,
+	SilenceUsage: true,
 }
 
 func channelsListRun(cmd *cobra.Command, args []string) error {
