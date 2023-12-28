@@ -56,6 +56,12 @@ func promotionCreateRun(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
+	// get channels from file if it exists
+	if err := getPromotions(); err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
 	// verify from channels exist
 	if !ChannelExists(promotionCreateFromChannel) {
 		return fmt.Errorf("channel %s does not exist", promotionCreateFromChannel)

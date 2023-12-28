@@ -10,10 +10,10 @@ import (
 const ()
 
 func init() {
-	channel.AddCommand(list)
+	channels.AddCommand(channelsList)
 }
 
-var list = &cobra.Command{
+var channelsList = &cobra.Command{
 	Use:          "list",
 	Args:         cobra.ExactArgs(0),
 	RunE:         channelsListRun,

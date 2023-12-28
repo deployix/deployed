@@ -10,14 +10,14 @@ import (
 var channelsGetChannelName string
 
 func init() {
-	get.Flags().StringVarP(&channelsGetChannelName, "name", "n", "", "(required) channel name")
-	if err := get.MarkFlagRequired("name"); err != nil {
+	channelsGet.Flags().StringVarP(&channelsGetChannelName, "name", "n", "", "(required) channel name")
+	if err := channelsGet.MarkFlagRequired("name"); err != nil {
 		os.Exit(1)
 	}
-	channel.AddCommand(get)
+	channels.AddCommand(channelsGet)
 }
 
-var get = &cobra.Command{
+var channelsGet = &cobra.Command{
 	Use:          "get",
 	RunE:         channelsGetRun,
 	SilenceUsage: true,

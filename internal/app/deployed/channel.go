@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/deployix/deployed/configs"
 	"github.com/spf13/cobra"
 	"gopkg.in/yaml.v2"
 )
@@ -18,20 +17,31 @@ type Channels struct {
 }
 
 type Channel struct {
-	Name        string
-	Description string
+	Description       string `yaml:"description,omitempty"`
+	ActionableVersion ActionableVersion
+	History           []History
+}
+
+type History struct {
+	Version string
+	Date    string
+}
+
+type ActionableVersion struct {
+	Version  string `yaml:"version,omitempty"`
+	DateTime string `yaml:"datetime,omitempty"`
 }
 
 func init() {
-	rootCmd.AddCommand(channel)
+	rootCmd.AddCommand(channels)
 
 	// try to get initialize channels if config file exists.
 	// if not don't error out
 	_ = getChannels()
 }
 
-var channel = &cobra.Command{
-	Use:          "channel",
+var channels = &cobra.Command{
+	Use:          "channels",
 	Short:        "",
 	Long:         "",
 	Run:          channelsRun,
@@ -48,7 +58,7 @@ func CreateChannelsFile() error {
 		return err
 	}
 
-	f, err := os.Create(configs.Cfg.GetChannelsPath())
+	f, err := os.Create(cfg.GetChannelsPath())
 	if err != nil {
 		return err
 	}
@@ -74,8 +84,8 @@ func ChannelExists(name string) bool {
 }
 
 func getChannels() error {
-	if _, err := os.Stat(configs.Cfg.GetChannelsPath()); err == nil {
-		yamlFile, err := os.ReadFile(configs.Cfg.GetChannelsPath())
+	if _, err := os.Stat(cfg.GetChannelsPath()); err == nil {
+		yamlFile, err := os.ReadFile(cfg.GetChannelsPath())
 		if err != nil {
 			return err
 		}
@@ -84,7 +94,7 @@ func getChannels() error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("Channels config file does not exists. Make sure the file %s exists", configs.Cfg.GetChannelsPath())
+		return fmt.Errorf("Channels config file does not exists. Make sure the file %s exists", cfg.GetChannelsPath())
 	}
 	return nil
 }

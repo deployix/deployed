@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/deployix/deployed/configs"
 	"github.com/spf13/cobra"
 	"gopkg.in/yaml.v2"
 )
@@ -24,15 +23,15 @@ type Promotions struct {
 }
 
 type Promotion struct {
-	Name        string `short:"n" long:"name" `
-	Description string `short:"d" long:"desc" `
-	FromChannel string `short:"n" long:"name" `
-	ToChannel   string `short:"n" long:"name" `
-	Crontime    string `short:"c" long:"crontime" `
+	Name        string `short:"n" long:"name" yaml:"name"`
+	Description string `short:"d" long:"desc" yaml:"description,omitempty"`
+	FromChannel string `short:"n" long:"name" yaml:"from_channel"`
+	ToChannel   string `short:"n" long:"name" yaml:"to_channel"`
+	Crontime    string `short:"c" long:"crontime" yaml:"crontime"`
 }
 
 var promotion = &cobra.Command{
-	Use: "promotion",
+	Use: "promotions",
 	Run: promotionsRun,
 }
 
@@ -45,7 +44,7 @@ func CreatePromotionsFile() error {
 		return err
 	}
 
-	f, err := os.Create(configs.Cfg.GetPromotionsPath())
+	f, err := os.Create(cfg.GetPromotionsPath())
 	if err != nil {
 		return err
 	}
@@ -63,8 +62,8 @@ func CreatePromotionsFile() error {
 }
 
 func getPromotions() error {
-	if _, err := os.Stat(configs.Cfg.GetPromotionsPath()); err == nil {
-		yamlFile, err := os.ReadFile(configs.Cfg.GetPromotionsPath())
+	if _, err := os.Stat(cfg.GetPromotionsPath()); err == nil {
+		yamlFile, err := os.ReadFile(cfg.GetPromotionsPath())
 		if err != nil {
 			return err
 		}
@@ -73,7 +72,7 @@ func getPromotions() error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("Promotions config file does not exists. Make sure the file %s exists", configs.Cfg.GetPromotionsPath())
+		return fmt.Errorf("Promotions config file does not exists. Make sure the file %s exists", cfg.GetPromotionsPath())
 	}
 	return nil
 }

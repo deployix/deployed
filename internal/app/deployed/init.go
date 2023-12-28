@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/deployix/deployed/configs"
 	"github.com/deployix/deployed/internal/constants"
 	"github.com/spf13/cobra"
 )
@@ -43,17 +42,17 @@ func initRun(cmd *cobra.Command, args []string) error {
 }
 
 func generateWorkingDir(force bool) error {
-	if _, err := os.Stat(configs.Cfg.GetDirectoryPath()); err == nil && !force {
+	if _, err := os.Stat(cfg.GetDirectoryPath()); err == nil && !force {
 		// Dir exists and we are not forcing the creation
-		return fmt.Errorf("dir %s already exists. Use --force to overwrite", configs.Cfg.GetDirectoryPath())
+		return fmt.Errorf("dir %s already exists. Use --force to overwrite", cfg.GetDirectoryPath())
 	} else {
-		err := os.RemoveAll(configs.Cfg.GetDirectoryPath())
+		err := os.RemoveAll(cfg.GetDirectoryPath())
 		if err != nil {
 			return err
 		}
 	}
 
-	if err := os.Mkdir(configs.Cfg.GetDirectoryPath(), constants.DEFAULT_DIR_FILEMODE); err != nil {
+	if err := os.Mkdir(cfg.GetDirectoryPath(), constants.DEFAULT_DIR_FILEMODE); err != nil {
 		return err
 	}
 
@@ -66,10 +65,6 @@ func generateWorkingDir(force bool) error {
 	}
 
 	if err := CreatePromotionsFile(); err != nil {
-		return err
-	}
-
-	if err := CreateVersionsFile(); err != nil {
 		return err
 	}
 

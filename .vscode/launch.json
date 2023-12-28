@@ -13,7 +13,7 @@
             "mode": "auto",
             "program": "${workspaceFolder}/cmd/deployed/deployed.go",
             "cwd": "${workspaceFolder}",
-            "args": ["promotion", "create", "-n", "Promote-stg-to-dev","-f", "test1", "-t", "test2", "-d", "promotion jop for stg to dev"]
+            "args": ["channels","create","-n","dev"]
         }
     ]
 }

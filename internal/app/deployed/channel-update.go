@@ -11,17 +11,17 @@ var channelsUpdateChannelName string
 var channelsUpdateDescription string
 
 func init() {
-	update.Flags().StringVarP(&channelsUpdateChannelName, "name", "n", "", "(required) channel name")
-	if err := update.MarkFlagRequired("name"); err != nil {
+	channelsUpdate.Flags().StringVarP(&channelsUpdateChannelName, "name", "n", "", "(required) channel name")
+	if err := channelsUpdate.MarkFlagRequired("name"); err != nil {
 		os.Exit(1)
 	}
 
 	// create channel description flag
-	update.Flags().StringVarP(&channelsUpdateDescription, "desc", "d", "", "channel description")
-	channel.AddCommand(update)
+	channelsUpdate.Flags().StringVarP(&channelsUpdateDescription, "desc", "d", "", "channel description")
+	channels.AddCommand(channelsUpdate)
 }
 
-var update = &cobra.Command{
+var channelsUpdate = &cobra.Command{
 	Use:          "update",
 	RunE:         channelsUpdateRun,
 	SilenceUsage: true,

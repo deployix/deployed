@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/deployix/deployed/configs"
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -38,7 +37,7 @@ func initConfig() {
 
 		// Search config in home directory with name ".deployed" (without extension).
 		viper.AddConfigPath(home)
-		viper.SetConfigName(configs.Cfg.GetConfigFileName())
+		viper.SetConfigName(cfg.GetConfigFileName())
 	}
 
 	viper.AutomaticEnv() // read in environment variables that match

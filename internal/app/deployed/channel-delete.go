@@ -11,17 +11,17 @@ var channelsDeleteChannelName string
 var channelsDeleteVerifyChannel bool
 
 func init() {
-	del.Flags().StringVarP(&channelsDeleteChannelName, "name", "n", "", "(required) channel name to delete")
-	if err := del.MarkFlagRequired("name"); err != nil {
+	channelsDelete.Flags().StringVarP(&channelsDeleteChannelName, "name", "n", "", "(required) channel name to delete")
+	if err := channelsDelete.MarkFlagRequired("name"); err != nil {
 		os.Exit(1)
 	}
 
-	del.Flags().BoolVarP(&channelsDeleteVerifyChannel, "verify-channel", "v", false, "verify the channel exists before deleting, otherwise throw error")
+	channelsDelete.Flags().BoolVarP(&channelsDeleteVerifyChannel, "verify-channel", "v", false, "verify the channel exists before deleting, otherwise throw error")
 
-	channel.AddCommand(del)
+	channels.AddCommand(channelsDelete)
 }
 
-var del = &cobra.Command{
+var channelsDelete = &cobra.Command{
 	Use:          "delete",
 	ArgAliases:   []string{"ChannelName"},
 	RunE:         channelsDeleteRun,
@@ -31,6 +31,12 @@ var del = &cobra.Command{
 func channelsDeleteRun(cmd *cobra.Command, args []string) error {
 	if err := cmd.ValidateRequiredFlags(); err != nil {
 		return err
+	}
+
+	// get channels from file if it exists
+	if err := getChannels(); err != nil {
+		fmt.Println(err)
+		os.Exit(1)
 	}
 
 	if channelsDeleteVerifyChannel {
