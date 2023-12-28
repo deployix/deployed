@@ -12,6 +12,8 @@ var chs Channels
 
 const ()
 
+var channelsConfigSetDescription string
+
 type Channels struct {
 	Channels map[string]Channel
 }
@@ -50,6 +52,12 @@ var channels = &cobra.Command{
 
 func channelsRun(cmd *cobra.Command, args []string) {
 	fmt.Println("RUNNNING")
+}
+
+// SetChannelsConfigFlags applies flags for `deployed config set` to use
+func SetChannelsConfigFlags(cmd *cobra.Command) {
+	cmd.Flags().StringVarP(&channelsConfigSetDescription, "desc", "d", "", "channel description")
+
 }
 
 func CreateChannelsFile() error {
