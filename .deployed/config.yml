@@ -1,0 +1,5 @@
+datetimeFormat: rfc1123
+channels:
+  datetimeFormat: test
+promotions: {}
+git: {}

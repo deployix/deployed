@@ -9,6 +9,8 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
+const ()
+
 var cfg Config
 
 type Config struct {
@@ -32,14 +34,14 @@ type Config struct {
 	// Notification: struct field to allow users to recive notifications when promotions or updates are done
 	// GitHub vs Gitlab code source config
 	// DateTime format user wants as string
-	DateTimeFormat string `yaml:"datetimeFormat,omitempty"`
-	channels       ChannelsConfig
+	DateTimeFormat string         `yaml:"datetimeFormat"`
+	Channels       ChannelsConfig `yaml:"channels"`
 	Promotions     PromotionsConfig
 	Git            GitConfig
 }
 
 type ChannelsConfig struct {
-	DateTimeFormat string `yaml:"datetimeFormat,omitempty"`
+	DateTimeFormat string `yaml:"datetimeFormat"`
 }
 
 type PromotionsConfig struct {

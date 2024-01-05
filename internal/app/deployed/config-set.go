@@ -4,77 +4,98 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/adhocore/gronx"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 var configSetDatetimeFormat string
 
 func init() {
-	configSet.Flags().StringVarP(&configSetDatetimeFormat, "name", "n", "", "(required) config name to update")
-	if err := configSet.MarkFlagRequired("name"); err != nil {
-		os.Exit(1)
-	}
+	// configSet.Flags().StringVarP(&configSetDatetimeFormat, "name", "n", "", "(required) config name to update")
+	// if err := configSet.MarkFlagRequired("name"); err != nil {
+	// 	os.Exit(1)
+	// }
 
 	config.AddCommand(configSet)
 }
 
 var configSet = &cobra.Command{
-	Use:          "set",
-	RunE:         configSetRun,
-	SilenceUsage: true,
+	Use:               "set",
+	RunE:              configSetRun,
+	Args:              cobra.ExactArgs(2),
+	ValidArgsFunction: validateArgs,
+	SilenceUsage:      true,
 }
 
 func configSetRun(cmd *cobra.Command, args []string) error {
-	if err := cmd.ValidateRequiredFlags(); err != nil {
-		return err
-	}
-
 	// get configs from file if it exists
 	if err := getConfig(); err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
 
-	if _, found := promos.configs[configUpdateconfigName]; !found {
-		return fmt.Errorf("config '%s' does not exist", configGetconfigName)
+	if err := cmd.ValidateRequiredFlags(); err != nil {
+		return err
 	}
 
-	// update config
-	updatedconfig := promos.configs[configUpdateconfigName]
+	key := args[0]
+	value := args[1]
 
-	if configUpdateDescription != "" {
-		updatedconfig.Description = configUpdateDescription
-	}
-	if configUpdateFromChannel != "" {
-		// check from channel exists
-		if !ChannelExists(configUpdateToChannel) {
-			return fmt.Errorf("channel %s does not exist", configUpdateFromChannel)
-		}
-		updatedconfig.FromChannel = configUpdateFromChannel
-	}
-	if configUpdateToChannel != "" {
-		// check to channel exists
-		if !ChannelExists(configUpdateToChannel) {
-			return fmt.Errorf("channel %s does not exist", configUpdateToChannel)
-		}
-		updatedconfig.ToChannel = configUpdateToChannel
-	}
-	if configUpdateCrontime != "" {
-		gron := gronx.New()
-		if !gron.IsValid(configUpdateCrontime) {
-			return fmt.Errorf("crontime '%s' is not valid. Valid example '0 */5 * * * *'", configUpdateCrontime)
-		}
-		updatedconfig.Crontime = configUpdateCrontime
+	// check if key exists in config
+	if !viper.InConfig(key) {
+		fmt.Printf(fmt.Sprintf("key '%s' does not exist in config", key))
+		os.Exit(1)
 	}
 
-	// update config
-	promos.configs[configUpdateconfigName] = updatedconfig
-
-	// update configs file
-	if err := CreateconfigsFile(); err != nil {
-		return fmt.Errorf("Unable to update configs config.")
+	// set key
+	if err := setConfigKey(key, value); err != nil {
+		return err
 	}
 
+	// update struct before updating file
+	if err := viper.Unmarshal(&cfg); err != nil {
+		fmt.Printf("error Unmarshal config %v", err)
+	}
+
+	// update config file
+	return CreateConfigFile()
+}
+
+// set config key
+func setConfigKey(key string, value interface{}) error {
+	switch value.(type) {
+	case string:
+		viper.Set(key, value.(string))
+		break
+	case bool:
+		viper.Set(key, value.(bool))
+		break
+	case int:
+		viper.Set(key, value.(int))
+		break
+	case int16:
+		viper.Set(key, value.(int16))
+		break
+	case int32:
+		viper.Set(key, value.(int32))
+		break
+	case int64:
+		viper.Set(key, value.(int64))
+		break
+	case float32:
+		viper.Set(key, value.(float32))
+		break
+	case float64:
+		viper.Set(key, value.(float64))
+		break
+	default:
+		return fmt.Errorf(fmt.Sprintf("Unsupported type: '%v", value))
+	}
 	return nil
+}
+
+func validateArgs(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
+	var comps []string
+
+	return comps, cobra.ShellCompDirectiveNoFileComp
 }
