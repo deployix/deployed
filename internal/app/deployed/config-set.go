@@ -23,7 +23,7 @@ var configSet = &cobra.Command{
 	Use:               "set",
 	RunE:              configSetRun,
 	Args:              cobra.ExactArgs(2),
-	ValidArgsFunction: validateArgs,
+	ValidArgsFunction: validateConfigSetArgs,
 	SilenceUsage:      true,
 }
 
@@ -39,7 +39,7 @@ func configSetRun(cmd *cobra.Command, args []string) error {
 	}
 
 	key := args[0]
-	value := args[1]
+	value := args[1] // TODO: convert string to proper type (i.e. int,bool etc)
 
 	// check if key exists in config
 	if !viper.InConfig(key) {
@@ -65,27 +65,35 @@ func configSetRun(cmd *cobra.Command, args []string) error {
 func setConfigKey(key string, value interface{}) error {
 	switch value.(type) {
 	case string:
+		fmt.Println("string")
 		viper.Set(key, value.(string))
 		break
 	case bool:
+		fmt.Println("bool")
 		viper.Set(key, value.(bool))
 		break
 	case int:
+		fmt.Println("int")
 		viper.Set(key, value.(int))
 		break
 	case int16:
+		fmt.Println("int16")
 		viper.Set(key, value.(int16))
 		break
 	case int32:
+		fmt.Println("int32")
 		viper.Set(key, value.(int32))
 		break
 	case int64:
+		fmt.Println("int64")
 		viper.Set(key, value.(int64))
 		break
 	case float32:
+		fmt.Println("float32")
 		viper.Set(key, value.(float32))
 		break
 	case float64:
+		fmt.Println("float64")
 		viper.Set(key, value.(float64))
 		break
 	default:
@@ -94,7 +102,8 @@ func setConfigKey(key string, value interface{}) error {
 	return nil
 }
 
-func validateArgs(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
+// validateConfigSetArgs validates the args sent
+func validateConfigSetArgs(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
 	var comps []string
 
 	return comps, cobra.ShellCompDirectiveNoFileComp

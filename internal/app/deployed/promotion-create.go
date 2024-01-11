@@ -40,7 +40,7 @@ func init() {
 	}
 
 	// create optional promotion description flag
-	promoteCreate.Flags().StringVarP(&promotionCreateDescription, "desc", "d", "", "promotion description")
+	promoteCreate.Flags().StringVarP(&promotionCreateDescription, "description", "d", "", "promotion description")
 
 	promotion.AddCommand(promoteCreate)
 }

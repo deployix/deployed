@@ -56,6 +56,8 @@ func generateWorkingDir(force bool) error {
 		return err
 	}
 
+	// TODO: create a struct that had default values to use when init vs var config
+	// use func createInitConfig()
 	if err := CreateConfigFile(); err != nil {
 		return err
 	}
@@ -69,4 +71,8 @@ func generateWorkingDir(force bool) error {
 	}
 
 	return nil
+}
+
+func createInitConfig() Config {
+	return Config{}
 }

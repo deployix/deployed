@@ -27,30 +27,60 @@ type Config struct {
 	promotionsFileName string
 
 	versionsFileName string
-	// MaxHistory: Max length of history versions struct should keep
-	// DefaultBranch: The branch that always pushes the latest version
-	// DefaultChannel: The channel that always gets the latest version
-	// Pause Promotions: Bool flag to pause promotion
-	// Notification: struct field to allow users to recive notifications when promotions or updates are done
+
 	// GitHub vs Gitlab code source config
 	// DateTime format user wants as string
-	DateTimeFormat string         `yaml:"datetimeFormat"`
-	Channels       ChannelsConfig `yaml:"channels"`
-	Promotions     PromotionsConfig
-	Git            GitConfig
+	DateTimeFormat string `yaml:"datetimeFormat"`
+	// DefaultBranch: The branch that always pushes the latest version
+	DefaultBranch string `yaml:"defaultBranch"`
+	// DefaultChannel: The channel that always gets the latest version
+	DefaultChannel   string           `yaml:"defaultChannel"`
+	ChannelsConfig   ChannelsConfig   `yaml:"channels"`
+	PromotionsConfig PromotionsConfig `yaml:"promotions"`
+	GitConfig        GitConfig        `yaml:"git"`
 }
 
 type ChannelsConfig struct {
-	DateTimeFormat string `yaml:"datetimeFormat"`
+
+	// MaxVersionHistoryLength: The maximum historical versions that should be keep
+	MaxVersionHistoryLength uint `yaml:"maxVersionHistoryLength"`
+
+	// Pause Promotions: Bool flag to indicate if promotion should be paused
+	PausePromotion bool `yaml:"pausePromotion"`
+
+	NotificationConfig NotificationConfig `yaml:"notificationConfig"`
 }
 
 type PromotionsConfig struct {
+	NotificationConfig NotificationConfig `yaml:"notificationConfig"`
+}
+
+type GitType int
+
+const (
+	Github = iota
+	Gitlab
+)
+
+func (t GitType) String() string {
+	return [...]string{"github", "gitlab"}[t]
+}
+
+func (t GitType) EnumIndex() int {
+	return int(t)
 }
 
 type GitConfig struct {
+	// GitType is the type of git being used (i.e. GitHub, Gitlab)
+	GitType string `yaml:"gitType"`
 }
 
 type NotificationConfig struct {
+	SlackConfig NotificationSlackConfig `yaml:"slackConfig"`
+}
+
+type NotificationSlackConfig struct {
+	SlackChannel string `yaml:"slackChannel"`
 }
 
 type DateTimeFormatType int

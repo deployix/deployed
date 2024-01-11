@@ -1,5 +1,12 @@
 datetimeFormat: rfc1123
+defaultBranch: ""
+defaultChannel: ""
 channels:
   datetimeFormat: test
-promotions: {}
+  maxVersionHistoryLength: 0
+  pausePromotion: false
+  notificationConfig: {}
+promotions:
+  datetimeFormat: ""
+  notificationConfig: {}
 git: {}
