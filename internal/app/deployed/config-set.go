@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/deployix/deployed/internal/utils"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -39,7 +40,7 @@ func configSetRun(cmd *cobra.Command, args []string) error {
 	}
 
 	key := args[0]
-	value := args[1] // TODO: convert string to proper type (i.e. int,bool etc)
+	value := utils.ConvertStringToType(args[1])
 
 	// check if key exists in config
 	if !viper.InConfig(key) {
@@ -48,58 +49,10 @@ func configSetRun(cmd *cobra.Command, args []string) error {
 	}
 
 	// set key
-	if err := setConfigKey(key, value); err != nil {
-		return err
-	}
+	viper.Set(key, value)
 
-	// update struct before updating file
-	if err := viper.Unmarshal(&cfg); err != nil {
-		fmt.Printf("error Unmarshal config %v", err)
-	}
-
-	// update config file
-	return CreateConfigFile()
-}
-
-// set config key
-func setConfigKey(key string, value interface{}) error {
-	switch value.(type) {
-	case string:
-		fmt.Println("string")
-		viper.Set(key, value.(string))
-		break
-	case bool:
-		fmt.Println("bool")
-		viper.Set(key, value.(bool))
-		break
-	case int:
-		fmt.Println("int")
-		viper.Set(key, value.(int))
-		break
-	case int16:
-		fmt.Println("int16")
-		viper.Set(key, value.(int16))
-		break
-	case int32:
-		fmt.Println("int32")
-		viper.Set(key, value.(int32))
-		break
-	case int64:
-		fmt.Println("int64")
-		viper.Set(key, value.(int64))
-		break
-	case float32:
-		fmt.Println("float32")
-		viper.Set(key, value.(float32))
-		break
-	case float64:
-		fmt.Println("float64")
-		viper.Set(key, value.(float64))
-		break
-	default:
-		return fmt.Errorf(fmt.Sprintf("Unsupported type: '%v", value))
-	}
-	return nil
+	// write to file
+	return viper.WriteConfig()
 }
 
 // validateConfigSetArgs validates the args sent

@@ -13,7 +13,7 @@
             "mode": "auto",
             "program": "${workspaceFolder}/cmd/deployed/deployed.go",
             "cwd": "${workspaceFolder}",
-            "args": ["config","set","datetimeFormat","test"],
+            "args": ["config","set","channels.maxVersionHistoryLength","30"],
         }
     ]
 }

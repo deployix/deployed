@@ -43,7 +43,7 @@ type Config struct {
 type ChannelsConfig struct {
 
 	// MaxVersionHistoryLength: The maximum historical versions that should be keep
-	MaxVersionHistoryLength uint `yaml:"maxVersionHistoryLength"`
+	MaxVersionHistoryLength int `yaml:"maxVersionHistoryLength"`
 
 	// Pause Promotions: Bool flag to indicate if promotion should be paused
 	PausePromotion bool `yaml:"pausePromotion"`
