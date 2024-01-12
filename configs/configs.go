@@ -10,5 +10,6 @@ type ConfigFiles struct {
 }
 
 func init() {
+	// TODO: add a watch to each file and when the file changes regenerate github/gitlab/notification files
 
 }
