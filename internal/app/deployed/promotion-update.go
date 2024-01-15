@@ -52,12 +52,12 @@ func PromotionUpdateRun(cmd *cobra.Command, args []string) error {
 		os.Exit(1)
 	}
 
-	if _, found := promos.Promotions[promotionUpdatePromotionName]; !found {
+	if _, found := Promos.Promotions[promotionUpdatePromotionName]; !found {
 		return fmt.Errorf("promotion '%s' does not exist", promotionGetPromotionName)
 	}
 
 	// update promotion
-	updatedPromotion := promos.Promotions[promotionUpdatePromotionName]
+	updatedPromotion := Promos.Promotions[promotionUpdatePromotionName]
 
 	if promotionUpdateDescription != "" {
 		updatedPromotion.Description = promotionUpdateDescription
@@ -85,7 +85,7 @@ func PromotionUpdateRun(cmd *cobra.Command, args []string) error {
 	}
 
 	// update promotion
-	promos.Promotions[promotionUpdatePromotionName] = updatedPromotion
+	Promos.Promotions[promotionUpdatePromotionName] = updatedPromotion
 
 	// update promotions file
 	if err := CreatePromotionsFile(); err != nil {

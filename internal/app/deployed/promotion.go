@@ -16,7 +16,7 @@ func init() {
 	_ = getPromotions()
 }
 
-var promos Promotions
+var Promos Promotions
 
 type Promotions struct {
 	Promotions map[string]Promotion
@@ -39,12 +39,12 @@ func promotionsRun(cmd *cobra.Command, args []string) {
 }
 
 func CreatePromotionsFile() error {
-	promoYmlData, err := yaml.Marshal(&promos)
+	promoYmlData, err := yaml.Marshal(&Promos)
 	if err != nil {
 		return err
 	}
 
-	f, err := os.Create(cfg.GetPromotionsPath())
+	f, err := os.Create(FilePaths.GetPromotionsFilePath())
 	if err != nil {
 		return err
 	}
@@ -62,17 +62,17 @@ func CreatePromotionsFile() error {
 }
 
 func getPromotions() error {
-	if _, err := os.Stat(cfg.GetPromotionsPath()); err == nil {
-		yamlFile, err := os.ReadFile(cfg.GetPromotionsPath())
+	if _, err := os.Stat(FilePaths.GetPromotionsFilePath()); err == nil {
+		yamlFile, err := os.ReadFile(FilePaths.GetPromotionsFilePath())
 		if err != nil {
 			return err
 		}
-		err = yaml.Unmarshal(yamlFile, &promos)
+		err = yaml.Unmarshal(yamlFile, &Promos)
 		if err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("Promotions config file does not exists. Make sure the file %s exists", cfg.GetPromotionsPath())
+		return fmt.Errorf("Promotions config file does not exists. Make sure the file %s exists", FilePaths.GetPromotionsFilePath())
 	}
 	return nil
 }

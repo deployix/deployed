@@ -28,7 +28,7 @@ func channelsListRun(cmd *cobra.Command, args []string) error {
 	}
 
 	// list channels
-	for channelName, _ := range chs.Channels {
+	for channelName, _ := range Chs.Channels {
 		fmt.Println(channelName)
 	}
 	return nil

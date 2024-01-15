@@ -42,15 +42,15 @@ func channelsHotfixRun(cmd *cobra.Command, args []string) error {
 	}
 
 	// check if channel already exists
-	if _, found := chs.Channels[channelsHotfixChannelName]; !found {
+	if _, found := Chs.Channels[channelsHotfixChannelName]; !found {
 		return fmt.Errorf(fmt.Sprintf("Channel with the name %s does not exist", channelsHotfixChannelName))
 	}
 
 	// hotfix channels
-	hotfixchannel := chs.Channels[channelsHotfixChannelName]
+	hotfixchannel := Chs.Channels[channelsHotfixChannelName]
 	// hotfixchannel.ActionableVersion = channelsHotfixVersion //TODO: fix
 	//TODO: add previous channels to history + check length
-	chs.Channels[channelsHotfixChannelName] = hotfixchannel
+	Chs.Channels[channelsHotfixChannelName] = hotfixchannel
 
 	// update channels file
 	if err := CreateChannelsFile(); err != nil {

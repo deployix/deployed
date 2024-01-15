@@ -8,7 +8,7 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-var chs Channels
+var Chs Channels
 
 const ()
 
@@ -61,12 +61,12 @@ func SetChannelsConfigFlags(cmd *cobra.Command) {
 }
 
 func CreateChannelsFile() error {
-	channelsYmlData, err := yaml.Marshal(&chs)
+	channelsYmlData, err := yaml.Marshal(&Chs)
 	if err != nil {
 		return err
 	}
 
-	f, err := os.Create(cfg.GetChannelsPath())
+	f, err := os.Create(FilePaths.GetChannelsFilePath())
 	if err != nil {
 		return err
 	}
@@ -85,24 +85,24 @@ func CreateChannelsFile() error {
 
 // ChannelExists validates a channel exists and returns true is found otherwise returns false
 func ChannelExists(name string) bool {
-	if _, found := chs.Channels[name]; found {
+	if _, found := Chs.Channels[name]; found {
 		return true
 	}
 	return false
 }
 
 func getChannels() error {
-	if _, err := os.Stat(cfg.GetChannelsPath()); err == nil {
-		yamlFile, err := os.ReadFile(cfg.GetChannelsPath())
+	if _, err := os.Stat(FilePaths.GetChannelsFilePath()); err == nil {
+		yamlFile, err := os.ReadFile(FilePaths.GetChannelsFilePath())
 		if err != nil {
 			return err
 		}
-		err = yaml.Unmarshal(yamlFile, &chs)
+		err = yaml.Unmarshal(yamlFile, &Chs)
 		if err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("Channels config file does not exists. Make sure the file %s exists", cfg.GetChannelsPath())
+		return fmt.Errorf("Channels config file does not exists. Make sure the file %s exists", FilePaths.GetChannelsFilePath())
 	}
 	return nil
 }

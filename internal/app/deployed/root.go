@@ -1,9 +1,6 @@
 package deployed
 
 import (
-	"fmt"
-
-	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -24,30 +21,26 @@ var rootCmd = &cobra.Command{
 }
 
 func initConfig() {
-	if cfgFile != "" {
-		// Use config file from the flag.
-		viper.SetConfigFile(cfgFile)
-	} else {
-		// set default config file path
-		viper.SetConfigFile(cfg.GetConfigPath())
-	}
+	InitConfigFiles()
+	// if cfgFile != "" {
+	// 	// Use config file from the flag.
+	// 	viper.SetConfigFile(cfgFile)
+	// } else {
+	// 	// set default config file path
+	// 	viper.SetConfigFile(cfg.GetConfigPath())
+	// }
 
-	viper.AutomaticEnv() // read in environment variables that match
+	// viper.AutomaticEnv() // read in environment variables that match
 
-	// If a config file is found, read it in.
-	if err := viper.ReadInConfig(); err != nil {
-		fmt.Println("using config file:", viper.ConfigFileUsed())
-		// TODO: change to print as debug log type
-	}
+	// // If a config file is found, read it in.
+	// if err := viper.ReadInConfig(); err != nil {
+	// 	fmt.Println("using config file:", viper.ConfigFileUsed())
+	// 	// TODO: change to print as debug log type
+	// }
 
-	if err := viper.Unmarshal(&cfg); err != nil {
-		fmt.Printf("error Unmarshal config %v", err)
-	}
-}
-
-func OnConfigChanged(e fsnotify.Event) {
-	fmt.Println("Config file changed:", e.Name)
-
+	// if err := viper.Unmarshal(&cfg); err != nil {
+	// 	fmt.Printf("error Unmarshal config %v", err)
+	// }
 }
 
 func Execute() error {

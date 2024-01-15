@@ -25,7 +25,7 @@ func PromotionListRun(cmd *cobra.Command, args []string) error {
 	}
 
 	// list promotions
-	for PromotionName, _ := range promos.Promotions {
+	for PromotionName, _ := range Promos.Promotions {
 		fmt.Println(PromotionName)
 	}
 	return nil

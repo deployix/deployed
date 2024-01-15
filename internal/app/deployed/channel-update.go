@@ -39,17 +39,17 @@ func channelsUpdateRun(cmd *cobra.Command, args []string) error {
 	}
 
 	// check if channel already exists
-	if _, found := chs.Channels[channelsUpdateChannelName]; !found {
+	if _, found := Chs.Channels[channelsUpdateChannelName]; !found {
 		return fmt.Errorf(fmt.Sprintf("Channel with the name %s does not exist", channelsUpdateChannelName))
 	}
 
 	// update channel
-	updatedChannel := chs.Channels[channelsUpdateChannelName]
+	updatedChannel := Chs.Channels[channelsUpdateChannelName]
 	if channelsUpdateDescription != "" {
 		updatedChannel.Description = channelsUpdateDescription
 	}
 
-	chs.Channels[channelsUpdateChannelName] = updatedChannel
+	Chs.Channels[channelsUpdateChannelName] = updatedChannel
 
 	// update file
 	if err := CreateChannelsFile(); err != nil {

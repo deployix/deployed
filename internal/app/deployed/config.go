@@ -4,29 +4,28 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/deployix/deployed/internal/constants"
 	"github.com/spf13/cobra"
 	"gopkg.in/yaml.v2"
 )
 
 const ()
 
-var cfg Config
+var Cfg Config
 
 type Config struct {
-	// path to working directory
-	path string
+	// // path to working directory
+	// path string
 
-	// Name of directory that contains deployed configurations
-	dirName string
+	// // Name of directory that contains deployed configurations
+	// dirName string
 
-	configFileName string
+	// configFileName string
 
-	channelsFileName string
+	// channelsFileName string
 
-	promotionsFileName string
+	// promotionsFileName string
 
-	versionsFileName string
+	// versionsFileName string
 
 	// GitHub vs Gitlab code source config
 	// DateTime format user wants as string
@@ -113,73 +112,47 @@ func init() {
 	// get config if setup
 	_ = getConfig()
 
-	// set default Path as current working dir
-	if cwd, err := os.Getwd(); err != nil {
-		fmt.Println(err)
-	} else {
-		cfg.path = cwd
-	}
-
-	// set DirName to default value
-	if cfg.dirName == "" {
-		cfg.dirName = constants.DEFAULT_DIR_NAME
-	}
-
-	// set ConfigFileName to default value
-	if cfg.configFileName == "" {
-		cfg.configFileName = constants.DEFAULT_CONFIG_FILENAME
-	}
-
-	// set ChannelsFileName to default value
-	if cfg.channelsFileName == "" {
-		cfg.channelsFileName = constants.DEFAULT_CHANNELS_FILENAME
-	}
-
-	// set PromotionsFileName to default value
-	if cfg.promotionsFileName == "" {
-		cfg.promotionsFileName = constants.DEFAULT_PROMOTIONS_FILENAME
-	}
-
-	// set VersionsFileName to default values
-	if cfg.versionsFileName == "" {
-		cfg.versionsFileName = constants.DEFAULT_VERSIONS_FILENAME
-	}
-
-	if cfg.DateTimeFormat == "" {
-		cfg.DateTimeFormat = RFC1123.String()
-	}
-
-	// // populate cfg var with whats in .deployed/config.yml file
-	// if _, err := os.Stat(cfg.GetConfigPath()); err == nil {
-	// 	cfgYmlFile, err := os.ReadFile(cfg.GetConfigPath())
-	// 	if err != nil {
-	// 		log.Printf("yamlFile.Get err   #%v ", err)
-	// 	}
-	// 	err = yaml.Unmarshal(cfgYmlFile, cfg)
-	// 	if err != nil {
-	// 		log.Fatalf("Unmarshal: %v", err)
-	// 	}
+	// // set default Path as current working dir
+	// if cwd, err := os.Getwd(); err != nil {
+	// 	fmt.Println(err)
+	// } else {
+	// 	cfg.path = cwd
 	// }
+
+	// if cfg.DateTimeFormat == "" {
+	// 	cfg.DateTimeFormat = RFC1123.String()
+	// }
+
+	// // // populate cfg var with whats in .deployed/config.yml file
+	// // if _, err := os.Stat(cfg.GetConfigPath()); err == nil {
+	// // 	cfgYmlFile, err := os.ReadFile(cfg.GetConfigPath())
+	// // 	if err != nil {
+	// // 		log.Printf("yamlFile.Get err   #%v ", err)
+	// // 	}
+	// // 	err = yaml.Unmarshal(cfgYmlFile, cfg)
+	// // 	if err != nil {
+	// // 		log.Fatalf("Unmarshal: %v", err)
+	// // 	}
+	// // }
 }
 
 var config = &cobra.Command{
-	Use:     "config",
-	Aliases: []string{"cfg"},
-	Short:   "",
-	Long:    "",
-	Run:     configRun,
+	Use:   "config",
+	Short: "",
+	Long:  "",
+	Run:   configRun,
 }
 
 func configRun(cmd *cobra.Command, args []string) {
 }
 
 func CreateConfigFile() error {
-	configYmlData, err := yaml.Marshal(&cfg)
+	configYmlData, err := yaml.Marshal(&Cfg)
 	if err != nil {
 		return err
 	}
 
-	f, err := os.Create(cfg.GetConfigPath())
+	f, err := os.Create(FilePaths.GetConfigFilePath())
 	if err != nil {
 		return err
 	}
@@ -196,46 +169,46 @@ func CreateConfigFile() error {
 	return nil
 }
 
-func (cfg *Config) GetConfigFileName() string {
-	return cfg.configFileName
-}
+// func (cfg *Config) GetConfigFileName() string {
+// 	return cfg.configFileName
+// }
 
-func (cfg *Config) GetPath() string {
-	return cfg.path
-}
+// func (cfg *Config) GetPath() string {
+// 	return cfg.path
+// }
 
-func (cfg *Config) GetDirectoryPath() string {
-	return fmt.Sprintf("%s/%s", cfg.path, cfg.dirName)
-}
+// func (cfg *Config) GetDirectoryPath() string {
+// 	return fmt.Sprintf("%s/%s", cfg.path, cfg.dirName)
+// }
 
-func (cfg *Config) GetConfigPath() string {
-	return fmt.Sprintf("%s/%s/%s", cfg.path, cfg.dirName, cfg.configFileName)
-}
+// func (cfg *Config) GetConfigPath() string {
+// 	return fmt.Sprintf("%s/%s/%s", cfg.path, cfg.dirName, cfg.configFileName)
+// }
 
-func (cfg *Config) GetChannelsPath() string {
-	return fmt.Sprintf("%s/%s/%s", cfg.path, cfg.dirName, cfg.channelsFileName)
-}
+// func (cfg *Config) GetChannelsPath() string {
+// 	return fmt.Sprintf("%s/%s/%s", cfg.path, cfg.dirName, cfg.channelsFileName)
+// }
 
-func (cfg *Config) GetPromotionsPath() string {
-	return fmt.Sprintf("%s/%s/%s", cfg.path, cfg.dirName, cfg.promotionsFileName)
-}
+// func (cfg *Config) GetPromotionsPath() string {
+// 	return fmt.Sprintf("%s/%s/%s", cfg.path, cfg.dirName, cfg.promotionsFileName)
+// }
 
-func (cfg *Config) GetVersionsPath() string {
-	return fmt.Sprintf("%s/%s/%s", cfg.path, cfg.dirName, cfg.versionsFileName)
-}
+// func (cfg *Config) GetVersionsPath() string {
+// 	return fmt.Sprintf("%s/%s/%s", cfg.path, cfg.dirName, cfg.versionsFileName)
+// }
 
 func getConfig() error {
-	if _, err := os.Stat(cfg.GetConfigPath()); err == nil {
-		yamlFile, err := os.ReadFile(cfg.GetConfigPath())
+	if _, err := os.Stat(FilePaths.GetConfigFilePath()); err == nil {
+		yamlFile, err := os.ReadFile(FilePaths.GetConfigFilePath())
 		if err != nil {
 			return err
 		}
-		err = yaml.Unmarshal(yamlFile, &cfg)
+		err = yaml.Unmarshal(yamlFile, &Cfg)
 		if err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("Config file does not exists. Make sure the file %s exists", cfg.GetConfigPath())
+		return fmt.Errorf("Config file does not exists. Make sure the file %s exists", FilePaths.GetConfigFilePath())
 	}
 	return nil
 }

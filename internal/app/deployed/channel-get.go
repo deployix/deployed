@@ -35,11 +35,11 @@ func channelsGetRun(cmd *cobra.Command, args []string) error {
 	}
 
 	// check if channel already exists
-	if _, found := chs.Channels[channelsGetChannelName]; !found {
+	if _, found := Chs.Channels[channelsGetChannelName]; !found {
 		return fmt.Errorf(fmt.Sprintf("Channel with the name %s does not exist", channelsGetChannelName))
 	}
 
 	// get channel
-	fmt.Println(chs.Channels[channelsGetChannelName])
+	fmt.Println(Chs.Channels[channelsGetChannelName])
 	return nil
 }

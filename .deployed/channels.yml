@@ -1,1 +1,7 @@
-channels: {}
+channels:
+  ame:
+    actionableversion: {}
+    history: []
+  dev:
+    actionableversion: {}
+    history: []

@@ -39,13 +39,13 @@ func PromotionDeleteRun(cmd *cobra.Command, args []string) error {
 	}
 
 	if promotionDeleteVerifyPromotion {
-		if _, found := promos.Promotions[promotionDeletePromotionName]; !found {
+		if _, found := Promos.Promotions[promotionDeletePromotionName]; !found {
 			return fmt.Errorf("promotion '%s' does not exist", promotionDeletePromotionName)
 		}
 	}
 
 	// delete promotion
-	delete(promos.Promotions, promotionDeletePromotionName)
+	delete(Promos.Promotions, promotionDeletePromotionName)
 
 	// update promotions file
 	if err := CreatePromotionsFile(); err != nil {

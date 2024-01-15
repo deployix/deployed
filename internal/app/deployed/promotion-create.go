@@ -85,12 +85,12 @@ func promotionCreateRun(cmd *cobra.Command, args []string) error {
 	}
 
 	// check if promotions with the same name already exists
-	if _, found := promos.Promotions[promotionCreateName]; found {
+	if _, found := Promos.Promotions[promotionCreateName]; found {
 		return fmt.Errorf(fmt.Sprintf("promotion with the name '%s' already exists", promotionCreateName))
 	}
 
 	// add promotion
-	promos.Promotions[promotionCreateName] = Promotion{
+	Promos.Promotions[promotionCreateName] = Promotion{
 		Name:        promotionCreateName,
 		Description: promotionCreateDescription,
 		FromChannel: promotionCreateFromChannel,

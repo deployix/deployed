@@ -42,22 +42,23 @@ func initRun(cmd *cobra.Command, args []string) error {
 }
 
 func generateWorkingDir(force bool) error {
-	if _, err := os.Stat(cfg.GetDirectoryPath()); err == nil && !force {
+	if _, err := os.Stat(FilePaths.GetDirectoryPath()); err == nil && !force {
 		// Dir exists and we are not forcing the creation
-		return fmt.Errorf("dir %s already exists. Use --force to overwrite", cfg.GetDirectoryPath())
+		return fmt.Errorf("dir %s already exists. Use --force to overwrite", FilePaths.GetDirectoryPath())
 	} else {
-		err := os.RemoveAll(cfg.GetDirectoryPath())
+		err := os.RemoveAll(FilePaths.GetDirectoryPath())
 		if err != nil {
 			return err
 		}
 	}
 
-	if err := os.Mkdir(cfg.GetDirectoryPath(), constants.DEFAULT_DIR_FILEMODE); err != nil {
+	if err := os.Mkdir(FilePaths.GetDirectoryPath(), constants.DEFAULT_DIR_FILEMODE); err != nil {
 		return err
 	}
 
 	// TODO: create a struct that had default values to use when init vs var config
 	// use func createInitConfig()
+	// TODO: clean up dir if error happens
 	if err := CreateConfigFile(); err != nil {
 		return err
 	}

@@ -1,6 +1,7 @@
 package constants
 
 const (
+	DEFAULT_FILEPATH = "."
 	// Default dir name that will be used to store config
 	DEFAULT_DIR_NAME = ".deployed"
 

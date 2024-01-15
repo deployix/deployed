@@ -1,15 +1,15 @@
+datetimeFormat: ""
+defaultBranch: ""
+defaultChannel: ""
 channels:
-    maxversionhistorylength: 30
-    notificationconfig:
-        slackconfig:
-            slackchannel: ""
-    pausepromotion: false
-datetimeformat: rfc1123
-defaultbranch: ""
-defaultchannel: ""
-git:
-    gittype: ""
+  maxVersionHistoryLength: 0
+  pausePromotion: false
+  notificationConfig:
+    slackConfig:
+      slackChannel: ""
 promotions:
-    notificationconfig:
-        slackconfig:
-            slackchannel: ""
+  notificationConfig:
+    slackConfig:
+      slackChannel: ""
+git:
+  gitType: ""

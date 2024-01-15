@@ -40,13 +40,13 @@ func channelsDeleteRun(cmd *cobra.Command, args []string) error {
 	}
 
 	if channelsDeleteVerifyChannel {
-		if _, found := chs.Channels[channelsDeleteChannelName]; !found {
+		if _, found := Chs.Channels[channelsDeleteChannelName]; !found {
 			return fmt.Errorf("channel %s does not exist", channelsDeleteChannelName)
 		}
 	}
 
 	// delete channel
-	delete(chs.Channels, channelsDeleteChannelName)
+	delete(Chs.Channels, channelsDeleteChannelName)
 
 	// update file
 	if err := CreateChannelsFile(); err != nil {
