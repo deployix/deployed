@@ -56,19 +56,27 @@ func promotionCreateRun(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	// get channels from file if it exists
-	if err := getPromotions(); err != nil {
+	// get promotions from file if it exists
+	promotions, err := GetPromotions()
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	// populate channels var from channels.yml file if it exists
+	channels, err := GetChannels()
+	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
 
 	// verify from channels exist
-	if !ChannelExists(promotionCreateFromChannel) {
+	if channels.ChannelExists(promotionCreateFromChannel) {
 		return fmt.Errorf("channel %s does not exist", promotionCreateFromChannel)
 	}
 
 	// check to channel exists
-	if !ChannelExists(promotionCreateToChannel) {
+	if channels.ChannelExists(promotionCreateToChannel) {
 		return fmt.Errorf("channel %s does not exist", promotionCreateToChannel)
 	}
 
@@ -78,19 +86,13 @@ func promotionCreateRun(cmd *cobra.Command, args []string) error {
 		return fmt.Errorf("crontime '%s' is not valid. Valid example '0 */5 * * * *'", promotionCreateCrontime)
 	}
 
-	// get promotions from file if it exists
-	if err := getPromotions(); err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
-
 	// check if promotions with the same name already exists
-	if _, found := Promos.Promotions[promotionCreateName]; found {
+	if _, found := promotions.Promotions[promotionCreateName]; found {
 		return fmt.Errorf(fmt.Sprintf("promotion with the name '%s' already exists", promotionCreateName))
 	}
 
 	// add promotion
-	Promos.Promotions[promotionCreateName] = Promotion{
+	promotions.Promotions[promotionCreateName] = Promotion{
 		Name:        promotionCreateName,
 		Description: promotionCreateDescription,
 		FromChannel: promotionCreateFromChannel,
@@ -98,10 +100,5 @@ func promotionCreateRun(cmd *cobra.Command, args []string) error {
 		Crontime:    promotionCreateCrontime,
 	}
 
-	// update promotions file
-	if err := CreatePromotionsFile(); err != nil {
-		return fmt.Errorf("unable to create promotions file. Try running `deployed init` to initialize")
-	}
-
-	return nil
+	return promotions.WriteToFile()
 }

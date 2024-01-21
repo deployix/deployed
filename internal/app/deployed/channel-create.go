@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/deployix/deployed/internal/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -23,7 +24,6 @@ func init() {
 
 	// create channel actionable-version flag
 	channelsCreate.Flags().StringVarP(&channelsCreateActionableVersion, "actionable-version", "v", "", "version that is deployable for this channel")
-	CfgFiles.ChannelsFile.BindPFlag(fmt.Sprintf("%s.actionableVersion", channelsCreate.GetString("")), channelsCreate.Flags().Lookup("name"))
 
 	channels.AddCommand(channelsCreate)
 }
@@ -41,14 +41,19 @@ func channelCreateRun(cmd *cobra.Command, args []string) error {
 	}
 
 	// populate channels var from channels.yml file if it exists
-	_, err := InitChannelsConfigFile()
+	channels, err := GetChannels()
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
 
+	config, err := GetConfig()
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
 	// check if channel with the same name already exists
-	if _, found := Chs.Channels[channelsCreateChannelName]; found {
+	if _, found := channels.Channels[channelsCreateChannelName]; found {
 		return fmt.Errorf(fmt.Sprintf("channel with the name '%s' already exists", channelsCreateChannelName))
 	}
 
@@ -59,19 +64,14 @@ func channelCreateRun(cmd *cobra.Command, args []string) error {
 		newChannel.Description = channelsCreateDescription
 	}
 
-	// if channelsCreateActionableVersion != "" {
-	// 	newChannel.ActionableVersion = ActionableVersion{
-	// 		Version:  channelsCreateActionableVersion,
-	// 		DateTime: utils.GetCurrentDateTimeAsString(cfg.DateTimeFormat),
-	// 	}
-	// }
-
-	Chs.Channels[channelsCreateChannelName] = newChannel
-
-	// update file
-	if err := CreateChannelsFile(); err != nil {
-		return fmt.Errorf("unable to create channel. Try running `deployed init` to initialize")
+	if channelsCreateActionableVersion != "" {
+		newChannel.ActionableVersion = ActionableVersion{
+			Version:  channelsCreateActionableVersion,
+			DateTime: utils.GetCurrentDateTimeAsString(config.DateTimeFormat), //TODO: convert string to datetype format
+		}
 	}
 
-	return nil
+	channels.Channels[channelsCreateChannelName] = newChannel
+
+	return channels.WriteToFile()
 }

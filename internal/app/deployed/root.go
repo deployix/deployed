@@ -21,26 +21,7 @@ var rootCmd = &cobra.Command{
 }
 
 func initConfig() {
-	InitConfigFiles()
-	// if cfgFile != "" {
-	// 	// Use config file from the flag.
-	// 	viper.SetConfigFile(cfgFile)
-	// } else {
-	// 	// set default config file path
-	// 	viper.SetConfigFile(cfg.GetConfigPath())
-	// }
 
-	// viper.AutomaticEnv() // read in environment variables that match
-
-	// // If a config file is found, read it in.
-	// if err := viper.ReadInConfig(); err != nil {
-	// 	fmt.Println("using config file:", viper.ConfigFileUsed())
-	// 	// TODO: change to print as debug log type
-	// }
-
-	// if err := viper.Unmarshal(&cfg); err != nil {
-	// 	fmt.Printf("error Unmarshal config %v", err)
-	// }
 }
 
 func Execute() error {

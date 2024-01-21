@@ -1,7 +1,4 @@
 channels:
-  ame:
-    actionableversion: {}
-    history: []
-  dev:
-    actionableversion: {}
+  stg:
+    actionableVersion: {}
     history: []

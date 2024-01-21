@@ -32,29 +32,25 @@ func channelsUpdateRun(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	// get channels from file if it exists
-	if err := getChannels(); err != nil {
+	// populate channels var from channels.yml file if it exists
+	channels, err := GetChannels()
+	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
 
 	// check if channel already exists
-	if _, found := Chs.Channels[channelsUpdateChannelName]; !found {
+	if _, found := channels.Channels[channelsUpdateChannelName]; !found {
 		return fmt.Errorf(fmt.Sprintf("Channel with the name %s does not exist", channelsUpdateChannelName))
 	}
 
 	// update channel
-	updatedChannel := Chs.Channels[channelsUpdateChannelName]
+	updatedChannel := channels.Channels[channelsUpdateChannelName]
 	if channelsUpdateDescription != "" {
 		updatedChannel.Description = channelsUpdateDescription
 	}
 
-	Chs.Channels[channelsUpdateChannelName] = updatedChannel
+	channels.Channels[channelsUpdateChannelName] = updatedChannel
 
-	// update file
-	if err := CreateChannelsFile(); err != nil {
-		return fmt.Errorf("Unable to update channel. Try running `deployed init` to initialize")
-	}
-
-	return nil
+	return channels.WriteToFile()
 }

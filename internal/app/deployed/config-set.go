@@ -29,14 +29,14 @@ var configSet = &cobra.Command{
 }
 
 func configSetRun(cmd *cobra.Command, args []string) error {
-	// get configs from file if it exists
-	if err := getConfig(); err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
-
 	if err := cmd.ValidateRequiredFlags(); err != nil {
 		return err
+	}
+
+	config, err := GetConfig()
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
 	}
 
 	key := args[0]
@@ -52,7 +52,7 @@ func configSetRun(cmd *cobra.Command, args []string) error {
 	viper.Set(key, value)
 
 	// write to file
-	return viper.WriteConfig()
+	return config.WriteToFile()
 }
 
 // validateConfigSetArgs validates the args sent

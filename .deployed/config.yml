@@ -1,15 +1,18 @@
-datetimeFormat: ""
-defaultBranch: ""
-defaultChannel: ""
+applicationName: deployed
+datetimeFormat: rubydate
+defaultBranch: main
+defaultChannel: stg
 channels:
-  maxVersionHistoryLength: 0
-  pausePromotion: false
+  maxVersionHistoryLength: 100
   notificationConfig:
     slackConfig:
       slackChannel: ""
 promotions:
+  pausePromotion: false
   notificationConfig:
     slackConfig:
       slackChannel: ""
 git:
-  gitType: ""
+  provider: github
+  domain: github.com
+  repoName: deployed

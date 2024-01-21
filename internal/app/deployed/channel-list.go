@@ -21,14 +21,19 @@ var channelsList = &cobra.Command{
 }
 
 func channelsListRun(cmd *cobra.Command, args []string) error {
-	// get channels from file if it exists
-	if err := getChannels(); err != nil {
+	if err := cmd.ValidateRequiredFlags(); err != nil {
+		return err
+	}
+
+	// populate channels var from channels.yml file if it exists
+	channels, err := GetChannels()
+	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
 
 	// list channels
-	for channelName, _ := range Chs.Channels {
+	for channelName, _ := range channels.Channels {
 		fmt.Println(channelName)
 	}
 	return nil

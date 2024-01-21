@@ -10,13 +10,7 @@ import (
 
 func init() {
 	rootCmd.AddCommand(promotion)
-
-	// try to get initialize promotions if config file exists.
-	// if not don't error out
-	_ = getPromotions()
 }
-
-var Promos Promotions
 
 type Promotions struct {
 	Promotions map[string]Promotion
@@ -35,11 +29,8 @@ var promotion = &cobra.Command{
 	Run: promotionsRun,
 }
 
-func promotionsRun(cmd *cobra.Command, args []string) {
-}
-
-func CreatePromotionsFile() error {
-	promoYmlData, err := yaml.Marshal(&Promos)
+func (p *Promotions) WriteToFile() error {
+	promotionsYmlData, err := yaml.Marshal(&p)
 	if err != nil {
 		return err
 	}
@@ -50,7 +41,7 @@ func CreatePromotionsFile() error {
 	}
 	defer f.Close()
 
-	_, err = f.Write(promoYmlData)
+	_, err = f.Write(promotionsYmlData)
 	if err != nil {
 		return err
 	}
@@ -61,18 +52,21 @@ func CreatePromotionsFile() error {
 	return nil
 }
 
-func getPromotions() error {
+func promotionsRun(cmd *cobra.Command, args []string) {
+}
+
+func GetPromotions() (*Promotions, error) {
 	if _, err := os.Stat(FilePaths.GetPromotionsFilePath()); err == nil {
+		promotionsConfigFile := &Promotions{}
 		yamlFile, err := os.ReadFile(FilePaths.GetPromotionsFilePath())
 		if err != nil {
-			return err
+			return nil, err
 		}
-		err = yaml.Unmarshal(yamlFile, &Promos)
+		err = yaml.Unmarshal(yamlFile, promotionsConfigFile)
 		if err != nil {
-			return err
+			return nil, err
 		}
-	} else {
-		return fmt.Errorf("Promotions config file does not exists. Make sure the file %s exists", FilePaths.GetPromotionsFilePath())
+		return promotionsConfigFile, nil
 	}
-	return nil
+	return nil, fmt.Errorf("Channels config file does not exists. Make sure the file %s exists", FilePaths.GetChannelsFilePath())
 }

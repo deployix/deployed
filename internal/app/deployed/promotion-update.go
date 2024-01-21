@@ -47,31 +47,39 @@ func PromotionUpdateRun(cmd *cobra.Command, args []string) error {
 	}
 
 	// get promotions from file if it exists
-	if err := getPromotions(); err != nil {
+	promotions, err := GetPromotions()
+	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
 
-	if _, found := Promos.Promotions[promotionUpdatePromotionName]; !found {
+	// populate channels var from channels.yml file if it exists
+	channels, err := GetChannels()
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	if _, found := promotions.Promotions[promotionUpdatePromotionName]; !found {
 		return fmt.Errorf("promotion '%s' does not exist", promotionGetPromotionName)
 	}
 
 	// update promotion
-	updatedPromotion := Promos.Promotions[promotionUpdatePromotionName]
+	updatedPromotion := promotions.Promotions[promotionUpdatePromotionName]
 
 	if promotionUpdateDescription != "" {
 		updatedPromotion.Description = promotionUpdateDescription
 	}
 	if promotionUpdateFromChannel != "" {
 		// check from channel exists
-		if !ChannelExists(promotionUpdateToChannel) {
+		if channels.ChannelExists(promotionUpdateToChannel) {
 			return fmt.Errorf("channel %s does not exist", promotionUpdateFromChannel)
 		}
 		updatedPromotion.FromChannel = promotionUpdateFromChannel
 	}
 	if promotionUpdateToChannel != "" {
 		// check to channel exists
-		if !ChannelExists(promotionUpdateToChannel) {
+		if channels.ChannelExists(promotionUpdateToChannel) {
 			return fmt.Errorf("channel %s does not exist", promotionUpdateToChannel)
 		}
 		updatedPromotion.ToChannel = promotionUpdateToChannel
@@ -85,12 +93,7 @@ func PromotionUpdateRun(cmd *cobra.Command, args []string) error {
 	}
 
 	// update promotion
-	Promos.Promotions[promotionUpdatePromotionName] = updatedPromotion
+	promotions.Promotions[promotionUpdatePromotionName] = updatedPromotion
 
-	// update promotions file
-	if err := CreatePromotionsFile(); err != nil {
-		return fmt.Errorf("Unable to update promotions config.")
-	}
-
-	return nil
+	return promotions.WriteToFile()
 }

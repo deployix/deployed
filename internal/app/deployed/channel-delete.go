@@ -33,25 +33,21 @@ func channelsDeleteRun(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	// get channels from file if it exists
-	if err := getChannels(); err != nil {
+	// populate channels var from channels.yml file if it exists
+	channels, err := GetChannels()
+	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
 
 	if channelsDeleteVerifyChannel {
-		if _, found := Chs.Channels[channelsDeleteChannelName]; !found {
+		if _, found := channels.Channels[channelsDeleteChannelName]; !found {
 			return fmt.Errorf("channel %s does not exist", channelsDeleteChannelName)
 		}
 	}
 
 	// delete channel
-	delete(Chs.Channels, channelsDeleteChannelName)
+	delete(channels.Channels, channelsDeleteChannelName)
 
-	// update file
-	if err := CreateChannelsFile(); err != nil {
-		return fmt.Errorf("Unable to update channels config.")
-	}
-
-	return nil
+	return channels.WriteToFile()
 }

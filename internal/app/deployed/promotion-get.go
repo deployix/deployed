@@ -30,22 +30,19 @@ func PromotionGetRun(cmd *cobra.Command, args []string) error {
 	}
 
 	// get promotions from file if it exists
-	if err := getPromotions(); err != nil {
+	promotions, err := GetPromotions()
+	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
 
-	if _, found := Promos.Promotions[promotionDeletePromotionName]; !found {
+	if _, found := promotions.Promotions[promotionDeletePromotionName]; !found {
 		return fmt.Errorf("promotion '%s' does not exist", promotionGetPromotionName)
 	}
 
 	// delete promotion
-	fmt.Println(Promos.Promotions[promotionDeletePromotionName])
+	fmt.Println(promotions.Promotions[promotionDeletePromotionName])
 
 	// update promotions file
-	if err := CreatePromotionsFile(); err != nil {
-		return fmt.Errorf("Unable to update promotions config.")
-	}
-
-	return nil
+	return promotions.WriteToFile()
 }

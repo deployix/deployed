@@ -28,18 +28,19 @@ func channelsGetRun(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	// get channels from file if it exists
-	if err := getChannels(); err != nil {
+	// populate channels var from channels.yml file if it exists
+	channels, err := GetChannels()
+	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
 
 	// check if channel already exists
-	if _, found := Chs.Channels[channelsGetChannelName]; !found {
+	if _, found := channels.Channels[channelsGetChannelName]; !found {
 		return fmt.Errorf(fmt.Sprintf("Channel with the name %s does not exist", channelsGetChannelName))
 	}
 
 	// get channel
-	fmt.Println(Chs.Channels[channelsGetChannelName])
+	fmt.Println(channels.Channels[channelsGetChannelName])
 	return nil
 }
