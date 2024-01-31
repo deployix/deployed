@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/deployix/deployed/internal/utils"
 	"github.com/spf13/cobra"
 	"gopkg.in/yaml.v2"
 )
@@ -26,7 +27,7 @@ func (c *Channels) WriteToFile() error {
 		return err
 	}
 
-	f, err := os.Create(FilePaths.GetChannelsFilePath())
+	f, err := os.Create(utils.FilePaths.GetChannelsFilePath())
 	if err != nil {
 		return err
 	}
@@ -45,9 +46,9 @@ func (c *Channels) WriteToFile() error {
 
 func GetChannels() (*Channels, error) {
 
-	if _, err := os.Stat(FilePaths.GetChannelsFilePath()); err == nil {
+	if _, err := os.Stat(utils.FilePaths.GetChannelsFilePath()); err == nil {
 		channelsConfigFile := &Channels{}
-		yamlFile, err := os.ReadFile(FilePaths.GetChannelsFilePath())
+		yamlFile, err := os.ReadFile(utils.FilePaths.GetChannelsFilePath())
 		if err != nil {
 			return nil, err
 		}
@@ -57,7 +58,7 @@ func GetChannels() (*Channels, error) {
 		}
 		return channelsConfigFile, nil
 	}
-	return nil, fmt.Errorf("Channels config file does not exists. Make sure the file %s exists", FilePaths.GetChannelsFilePath())
+	return nil, fmt.Errorf("Channels config file does not exists. Make sure the file %s exists", utils.FilePaths.GetChannelsFilePath())
 }
 
 type Channel struct {
@@ -108,7 +109,7 @@ func CreateChannelsFile() error {
 		return err
 	}
 
-	f, err := os.Create(FilePaths.GetChannelsFilePath())
+	f, err := os.Create(utils.FilePaths.GetChannelsFilePath())
 	if err != nil {
 		return err
 	}
@@ -134,8 +135,8 @@ func (c *Channels) ChannelExists(name string) bool {
 }
 
 func getChannels() error {
-	if _, err := os.Stat(FilePaths.GetChannelsFilePath()); err == nil {
-		yamlFile, err := os.ReadFile(FilePaths.GetChannelsFilePath())
+	if _, err := os.Stat(utils.FilePaths.GetChannelsFilePath()); err == nil {
+		yamlFile, err := os.ReadFile(utils.FilePaths.GetChannelsFilePath())
 		if err != nil {
 			return err
 		}
@@ -144,7 +145,7 @@ func getChannels() error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("Channels config file does not exists. Make sure the file %s exists", FilePaths.GetChannelsFilePath())
+		return fmt.Errorf("Channels config file does not exists. Make sure the file %s exists", utils.FilePaths.GetChannelsFilePath())
 	}
 	return nil
 }

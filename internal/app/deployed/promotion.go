@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/deployix/deployed/internal/utils"
 	"github.com/spf13/cobra"
 	"gopkg.in/yaml.v2"
 )
@@ -35,7 +36,7 @@ func (p *Promotions) WriteToFile() error {
 		return err
 	}
 
-	f, err := os.Create(FilePaths.GetPromotionsFilePath())
+	f, err := os.Create(utils.FilePaths.GetPromotionsFilePath())
 	if err != nil {
 		return err
 	}
@@ -56,9 +57,9 @@ func promotionsRun(cmd *cobra.Command, args []string) {
 }
 
 func GetPromotions() (*Promotions, error) {
-	if _, err := os.Stat(FilePaths.GetPromotionsFilePath()); err == nil {
+	if _, err := os.Stat(utils.FilePaths.GetPromotionsFilePath()); err == nil {
 		promotionsConfigFile := &Promotions{}
-		yamlFile, err := os.ReadFile(FilePaths.GetPromotionsFilePath())
+		yamlFile, err := os.ReadFile(utils.FilePaths.GetPromotionsFilePath())
 		if err != nil {
 			return nil, err
 		}
@@ -68,5 +69,5 @@ func GetPromotions() (*Promotions, error) {
 		}
 		return promotionsConfigFile, nil
 	}
-	return nil, fmt.Errorf("Channels config file does not exists. Make sure the file %s exists", FilePaths.GetChannelsFilePath())
+	return nil, fmt.Errorf("Channels config file does not exists. Make sure the file %s exists", utils.FilePaths.GetChannelsFilePath())
 }

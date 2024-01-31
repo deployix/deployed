@@ -6,6 +6,7 @@ import (
 	"strconv"
 
 	"github.com/deployix/deployed/internal/constants"
+	"github.com/deployix/deployed/internal/utils"
 	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
 )
@@ -166,17 +167,17 @@ func initRun(cmd *cobra.Command, args []string) error {
 }
 
 func generateWorkingDir(force bool) error {
-	if _, err := os.Stat(FilePaths.GetDirectoryPath()); err == nil && !force {
+	if _, err := os.Stat(utils.FilePaths.GetDirectoryPath()); err == nil && !force {
 		// Dir exists and we are not forcing the creation
-		return fmt.Errorf("dir %s already exists. Use --force to overwrite", FilePaths.GetDirectoryPath())
+		return fmt.Errorf("dir %s already exists. Use --force to overwrite", utils.FilePaths.GetDirectoryPath())
 	} else {
-		err := os.RemoveAll(FilePaths.GetDirectoryPath())
+		err := os.RemoveAll(utils.FilePaths.GetDirectoryPath())
 		if err != nil {
 			return err
 		}
 	}
 
-	if err := os.Mkdir(FilePaths.GetDirectoryPath(), constants.DEFAULT_DIR_FILEMODE); err != nil {
+	if err := os.Mkdir(utils.FilePaths.GetDirectoryPath(), constants.DEFAULT_DIR_FILEMODE); err != nil {
 		return err
 	}
 

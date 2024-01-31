@@ -1,4 +1,4 @@
-package deployed
+package utils
 
 import (
 	"fmt"
@@ -9,7 +9,7 @@ import (
 // FilePaths handles file paths used by the CLI
 var FilePaths FilePathsConfig = FilePathsConfig{
 	path:               constants.DEFAULT_FILEPATH,
-	dirName:            constants.DEFAULT_DIR_NAME,
+	dirName:            constants.DEFAULT_DEPLOYED_DIRECTORY,
 	configFileName:     constants.DEFAULT_CONFIG_FILENAME,
 	channelsFileName:   constants.DEFAULT_CHANNELS_FILENAME,
 	promotionsFileName: constants.DEFAULT_PROMOTIONS_FILENAME,
@@ -43,6 +43,14 @@ func (fpc *FilePathsConfig) GetPath() string {
 
 func (fpc *FilePathsConfig) GetDirectoryPath() string {
 	return fmt.Sprintf("%s/%s", fpc.path, fpc.dirName)
+}
+
+func (fpc *FilePathsConfig) GetGitDirectoryPath(gitType string) string {
+	dir := constants.DEFAULT_GITHUB_DIRECTORY_PATH
+	if gitType == "gitlab" {
+		dir = constants.DEFAULT_GITLAB_DIRECTORY_PATH
+	}
+	return fmt.Sprintf("%s/%s/%s", fpc.path, fpc.dirName, dir)
 }
 
 func (fpc *FilePathsConfig) GetConfigFilePath() string {

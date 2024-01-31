@@ -4,8 +4,9 @@ const (
 	DEFAULT_FILEPATH        = "."
 	DEFAULT_GIT_BRANCH      = "main"
 	DEFAULT_DATETIME_FORMAT = "rubydate"
+
 	// Default dir name that will be used to store config
-	DEFAULT_DIR_NAME = ".deployed"
+	DEFAULT_DEPLOYED_DIRECTORY = ".deployed"
 
 	// Default filemode for dir
 	DEFAULT_DIR_FILEMODE = 0755

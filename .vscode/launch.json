@@ -13,7 +13,7 @@
             "mode": "auto",
             "program": "${workspaceFolder}/cmd/deployed/deployed.go",
             "cwd": "${workspaceFolder}",
-            "args": ["channels","create","--name","devr", "-v","v1.0.0"],
+            "args": ["channels","get","--name","stg"],
         }
     ]
 }

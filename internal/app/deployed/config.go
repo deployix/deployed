@@ -1,9 +1,11 @@
 package deployed
 
 import (
+	"fmt"
 	"os"
 	"time"
 
+	"github.com/deployix/deployed/internal/utils"
 	"github.com/spf13/cobra"
 	"gopkg.in/yaml.v2"
 )
@@ -78,13 +80,30 @@ func (d DateTimeFormatType) EnumIndex() int {
 	return int(d)
 }
 
+func GetConfig() (*Config, error) {
+	if _, err := os.Stat(utils.FilePaths.GetConfigFilePath()); err == nil {
+		configFile := &Config{}
+		yamlFile, err := os.ReadFile(utils.FilePaths.GetConfigFilePath())
+		if err != nil {
+			return nil, err
+		}
+		err = yaml.Unmarshal(yamlFile, configFile)
+		if err != nil {
+			return nil, err
+		}
+		return configFile, nil
+	}
+	return nil, fmt.Errorf("Config file does not exists. Make sure the file %s exists", utils.FilePaths.GetConfigFilePath())
+
+}
+
 func (c *Config) WriteToFile() error {
 	configYmlData, err := yaml.Marshal(&c)
 	if err != nil {
 		return err
 	}
 
-	f, err := os.Create(FilePaths.GetConfigFilePath())
+	f, err := os.Create(utils.FilePaths.GetConfigFilePath())
 	if err != nil {
 		return err
 	}
