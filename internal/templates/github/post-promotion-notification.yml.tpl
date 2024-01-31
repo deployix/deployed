@@ -3,7 +3,7 @@ on: [push]
 jobs:
   new_push_job:
     runs-on: ubuntu-latest
-    name: {{ .}}
+    name: test
     steps:
     - name: Publish to slack channel via bot token
       id: slack
@@ -12,4 +12,5 @@ jobs:
         channel-id: 'SLACK_CHANNEL_ID' # ID of Slack Channel you want to post to
         slack-message: 'posting from a github action!' # The message you want to post
       env:
-        SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        SLACK_BOT_TOKEN: 
+{0xc0000a6070 0xc0000a23c0 0xc0000a6098}

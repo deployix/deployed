@@ -2,6 +2,7 @@ package utils
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/deployix/deployed/internal/constants"
 )
@@ -46,11 +47,20 @@ func (fpc *FilePathsConfig) GetDirectoryPath() string {
 }
 
 func (fpc *FilePathsConfig) GetGitDirectoryPath(gitType string) string {
-	dir := constants.DEFAULT_GITHUB_DIRECTORY_PATH
-	if gitType == "gitlab" {
-		dir = constants.DEFAULT_GITLAB_DIRECTORY_PATH
+	dir := constants.DEFAULT_GITHUB_TEMPLATES_DIRECTORY_PATH
+	if strings.EqualFold(gitType, "gitlab") {
+		dir = constants.DEFAULT_GITHUB_TEMPLATES_DIRECTORY_PATH
 	}
-	return fmt.Sprintf("%s/%s/%s", fpc.path, fpc.dirName, dir)
+	return dir
+}
+
+// GetGitDirectoryOutputPath returns the template output file path
+func (fpc *FilePathsConfig) GetGitDirectoryOutputPath(gitType string) string {
+	dir := constants.DEFAULT_GITHUB_ACTIONS_DIRECTORY_PATH
+	if strings.EqualFold(gitType, "gitlab") {
+		dir = constants.DEFAULT_GITLAB_PIPELINE_DIRECTORY_PATH
+	}
+	return fmt.Sprintf("%s/%s", fpc.path, dir)
 }
 
 func (fpc *FilePathsConfig) GetConfigFilePath() string {
@@ -67,4 +77,8 @@ func (fpc *FilePathsConfig) GetPromotionsFilePath() string {
 
 func (fpc *FilePathsConfig) GetVersionsFilePath() string {
 	return fmt.Sprintf("%s/%s/%s", fpc.path, fpc.dirName, fpc.versionsFileName)
+}
+
+func (fpc *FilePathsConfig) GetTemplatesDirectoryPath() string {
+	return fmt.Sprintf("%s/%s", fpc.path, constants.DEFAULT_TEMPLATES_DIRECTORY_PATH)
 }

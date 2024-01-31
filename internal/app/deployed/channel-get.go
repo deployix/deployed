@@ -24,6 +24,7 @@ var channelsGet = &cobra.Command{
 }
 
 func channelsGetRun(cmd *cobra.Command, args []string) error {
+	return GenerateGitPromotionTemplate()
 	if err := cmd.ValidateRequiredFlags(); err != nil {
 		return err
 	}
