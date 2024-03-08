@@ -5,6 +5,7 @@ go 1.20
 require (
 	github.com/adhocore/gronx v1.6.6
 	github.com/fsnotify/fsnotify v1.7.0
+	github.com/manifoldco/promptui v0.9.0
 	github.com/spf13/cobra v1.8.0
 )
 
@@ -12,7 +13,6 @@ require (
 	github.com/chzyer/readline v0.0.0-20180603132655-2972be24d48e // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/magiconair/properties v1.8.7 // indirect
-	github.com/manifoldco/promptui v0.9.0 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/pelletier/go-toml/v2 v2.1.0 // indirect
 	github.com/sagikazarmark/locafero v0.4.0 // indirect

@@ -20,8 +20,8 @@ type Promotions struct {
 type Promotion struct {
 	Name        string `short:"n" long:"name" yaml:"name"`
 	Description string `short:"d" long:"desc" yaml:"description,omitempty"`
-	FromChannel string `short:"n" long:"name" yaml:"from_channel"`
-	ToChannel   string `short:"n" long:"name" yaml:"to_channel"`
+	FromChannel string `short:"f" long:"from_channel" yaml:"from_channel"`
+	ToChannel   string `short:"t" long:"to_channel" yaml:"to_channel"`
 	Crontime    string `short:"c" long:"crontime" yaml:"crontime"`
 }
 
