@@ -32,7 +32,7 @@ builds:
 archives:
   - format: tar.gz
     # this name template makes the OS and Arch compatible with the results of `uname`.
-    name_template: '{{.ProjectName}}_{{.Version}}_{{.Os}}-{{.Arch}}'
+    name_template: '{{.ProjectName}}_v{{.Version}}_{{.Os}}-{{.Arch}}'
     # use zip for windows archives
     format_overrides:
       - goos: windows
