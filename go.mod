@@ -4,7 +4,6 @@ go 1.20
 
 require (
 	github.com/adhocore/gronx v1.6.6
-	github.com/fsnotify/fsnotify v1.7.0
 	github.com/manifoldco/promptui v0.9.0
 	github.com/spf13/cobra v1.8.0
 	gopkg.in/yaml.v3 v3.0.1
