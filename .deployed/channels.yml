@@ -1,4 +1,40 @@
 channels:
-  stg:
-    actionableVersion: {}
-    history: []
+    dev:
+        actionableVersion:
+            version: v1.0.0
+            datetime: rubydate
+        history: []
+    fur:
+        actionableVersion:
+            version: 3.2.1
+            datetime: Wed May 29 19:44:50 -0700 2024
+        history: []
+    local:
+        actionableVersion:
+            version: v3.0.0
+            datetime: rubydate
+        history: []
+    prd:
+        actionableVersion:
+            version: v4.0.3
+            datetime: Sun May 26 20:40:09 -0700 2024
+        history:
+            - version: v4.0.0
+              date: Sun May 26 20:37:14 -0700 2024
+            - version: v4.0.1
+              date: Sun May 26 20:37:29 -0700 2024
+            - version: v4.0.2
+              date: Sun May 26 20:40:09 -0700 2024
+    stg:
+        actionableVersion:
+            version: v4.0.3
+            datetime: rubydate
+        history: []
+    test:
+        actionableVersion: {}
+        history: []
+    test1:
+        actionableVersion:
+            version: 1.2.3
+            datetime: Sun May 26 20:42:35 -0700 2024
+        history: []

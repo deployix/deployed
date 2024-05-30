@@ -3,11 +3,11 @@ package main
 import (
 	"os"
 
-	"github.com/deployix/deployed/internal/app/deployed"
+	deployedV1 "github.com/deployix/deployed/internal/app/deployed/v1"
 )
 
 func main() {
-	if err := deployed.Execute(); err != nil {
+	if err := deployedV1.Execute(); err != nil {
 		os.Exit(1)
 	}
 }

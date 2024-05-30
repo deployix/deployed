@@ -13,4 +13,3 @@ jobs:
         slack-message: 'posting from a github action!' # The message you want to post
       env:
         SLACK_BOT_TOKEN: 
-{0xc0000a6070 0xc0000a23c0 0xc0000a6098}
