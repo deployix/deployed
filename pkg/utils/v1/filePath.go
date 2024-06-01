@@ -2,10 +2,17 @@ package v1
 
 import (
 	"fmt"
+	"os"
+	"path/filepath"
 	"strings"
 
 	constantsV1 "github.com/deployix/deployed/pkg/constants/v1"
 )
+
+func init() {
+	// get working dir from github actions and set it as root path for filepath
+	FilePaths.path = os.Getenv(constantsV1.FILEPATH_WORKING_DIR_ENV)
+}
 
 // FilePaths handles file paths used by the CLI
 var FilePaths FilePathsConfig = FilePathsConfig{
@@ -39,15 +46,17 @@ func (fpc *FilePathsConfig) GetConfigFileName() string {
 }
 
 func (fpc *FilePathsConfig) GetPath() string {
-	return fpc.path
+	// check if user specified working directory
+	workingDir := os.Getenv(constantsV1.FILEPATH_WORKING_DIR_ENV)
+	return filepath.Join(workingDir, fpc.path)
 }
 
 func (fpc *FilePathsConfig) GetDirectoryPath() string {
-	return fmt.Sprintf("%s/%s", fpc.path, fpc.dirName)
+	return fmt.Sprintf("%s/%s", fpc.GetPath(), fpc.dirName)
 }
 
 func (fpc *FilePathsConfig) GetGitDirectoryPath(gitType string) string {
-	dir := constantsV1.DEFAULT_GITHUB_TEMPLATES_DIRECTORY_PATH
+	dir := constantsV1.DEFAULT_GITLAB_TEMPLATES_DIRECTORY_PATH
 	if strings.EqualFold(gitType, "gitlab") {
 		dir = constantsV1.DEFAULT_GITHUB_TEMPLATES_DIRECTORY_PATH
 	}
@@ -56,29 +65,29 @@ func (fpc *FilePathsConfig) GetGitDirectoryPath(gitType string) string {
 
 // GetGitDirectoryOutputPath returns the template output file path
 func (fpc *FilePathsConfig) GetGitDirectoryOutputPath(gitType string) string {
-	dir := constantsV1.DEFAULT_GITHUB_ACTIONS_DIRECTORY_PATH
+	dir := constantsV1.DEFAULT_GITLAB_TEMPLATES_DIRECTORY_PATH
 	if strings.EqualFold(gitType, "gitlab") {
 		dir = constantsV1.DEFAULT_GITLAB_PIPELINE_DIRECTORY_PATH
 	}
-	return fmt.Sprintf("%s/%s", fpc.path, dir)
+	return fmt.Sprintf("%s/%s", fpc.GetPath(), dir)
 }
 
 func (fpc *FilePathsConfig) GetConfigFilePath() string {
-	return fmt.Sprintf("%s/%s/%s", fpc.path, fpc.dirName, fpc.configFileName)
+	return fmt.Sprintf("%s/%s/%s", fpc.GetPath(), fpc.dirName, fpc.configFileName)
 }
 
 func (fpc *FilePathsConfig) GetChannelsFilePath() string {
-	return fmt.Sprintf("%s/%s/%s", fpc.path, fpc.dirName, fpc.channelsFileName)
+	return fmt.Sprintf("%s/%s/%s", fpc.GetPath(), fpc.dirName, fpc.channelsFileName)
 }
 
 func (fpc *FilePathsConfig) GetPromotionsFilePath() string {
-	return fmt.Sprintf("%s/%s/%s", fpc.path, fpc.dirName, fpc.promotionsFileName)
+	return fmt.Sprintf("%s/%s/%s", fpc.GetPath(), fpc.dirName, fpc.promotionsFileName)
 }
 
 func (fpc *FilePathsConfig) GetVersionsFilePath() string {
-	return fmt.Sprintf("%s/%s/%s", fpc.path, fpc.dirName, fpc.versionsFileName)
+	return fmt.Sprintf("%s/%s/%s", fpc.GetPath(), fpc.dirName, fpc.versionsFileName)
 }
 
 func (fpc *FilePathsConfig) GetTemplatesDirectoryPath() string {
-	return fmt.Sprintf("%s/%s", fpc.path, constantsV1.DEFAULT_TEMPLATES_DIRECTORY_PATH)
+	return fmt.Sprintf("%s/%s", fpc.GetPath(), constantsV1.DEFAULT_TEMPLATES_DIRECTORY_PATH)
 }
