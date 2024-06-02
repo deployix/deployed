@@ -57,5 +57,5 @@ func GetPromotions() (*Promotions, error) {
 		}
 		return promotionsConfigFile, nil
 	}
-	return nil, fmt.Errorf("Channels config file does not exists. Make sure the file %s exists", utilsV1.FilePaths.GetChannelsFilePath())
+	return nil, fmt.Errorf("Promotions config file does not exists. Make sure the file %s exists", utilsV1.FilePaths.GetPromotionsFilePath())
 }
