@@ -48,7 +48,10 @@ func (fpc *FilePathsConfig) GetConfigFileName() string {
 func (fpc *FilePathsConfig) GetPath() string {
 	// check if user specified working directory
 	workingDir := os.Getenv(constantsV1.FILEPATH_WORKING_DIR_ENV)
-	return filepath.Join(workingDir, fpc.path)
+	if workingDir != "" {
+		return filepath.Join(workingDir, fpc.path)
+	}
+	return fpc.path
 }
 
 func (fpc *FilePathsConfig) GetDirectoryPath() string {
