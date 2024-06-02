@@ -9,11 +9,6 @@ import (
 	constantsV1 "github.com/deployix/deployed/pkg/constants/v1"
 )
 
-func init() {
-	// get working dir from github actions and set it as root path for filepath
-	FilePaths.path = os.Getenv(constantsV1.FILEPATH_WORKING_DIR_ENV)
-}
-
 // FilePaths handles file paths used by the CLI
 var FilePaths FilePathsConfig = FilePathsConfig{
 	path:               constantsV1.DEFAULT_FILEPATH,
