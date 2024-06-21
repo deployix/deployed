@@ -22,9 +22,9 @@ func (c *Channels) ChannelExists(name string) bool {
 }
 
 func GetChannels() (*Channels, error) {
-	if _, err := os.Stat(utilsV1.FilePaths.GetChannelsFilePath()); err == nil {
+	if _, err := os.Stat(utilsV1.FilePaths().GetChannelsFilePath()); err == nil {
 		channelsConfigFile := &Channels{}
-		yamlFile, err := os.ReadFile(utilsV1.FilePaths.GetChannelsFilePath())
+		yamlFile, err := os.ReadFile(utilsV1.FilePaths().GetChannelsFilePath())
 		if err != nil {
 			return nil, err
 		}
@@ -34,7 +34,7 @@ func GetChannels() (*Channels, error) {
 		}
 		return channelsConfigFile, nil
 	}
-	return nil, fmt.Errorf("Channels config file does not exists. Make sure the file %s exists", utilsV1.FilePaths.GetChannelsFilePath())
+	return nil, fmt.Errorf("Channels config file does not exists. Make sure the file %s exists", utilsV1.FilePaths().GetChannelsFilePath())
 }
 
 func (c *Channels) WriteToFile() error {
@@ -43,7 +43,7 @@ func (c *Channels) WriteToFile() error {
 		return err
 	}
 
-	f, err := os.Create(utilsV1.FilePaths.GetChannelsFilePath())
+	f, err := os.Create(utilsV1.FilePaths().GetChannelsFilePath())
 	if err != nil {
 		return err
 	}

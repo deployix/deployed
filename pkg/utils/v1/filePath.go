@@ -2,7 +2,6 @@ package v1
 
 import (
 	"fmt"
-	"os"
 	"path/filepath"
 	"strings"
 
@@ -10,14 +9,14 @@ import (
 )
 
 // FilePaths handles file paths used by the CLI
-var FilePaths FilePathsConfig = FilePathsConfig{
-	path:               constantsV1.DEFAULT_FILEPATH,
-	dirName:            constantsV1.DEFAULT_DEPLOYED_DIRECTORY,
-	configFileName:     constantsV1.DEFAULT_CONFIG_FILENAME,
-	channelsFileName:   constantsV1.DEFAULT_CHANNELS_FILENAME,
-	promotionsFileName: constantsV1.DEFAULT_PROMOTIONS_FILENAME,
-	versionsFileName:   constantsV1.DEFAULT_VERSIONS_FILENAME,
-}
+// var FilePaths FilePathsConfig = FilePathsConfig{
+// 	path:               constantsV1.DEFAULT_FILEPATH,
+// 	dirName:            constantsV1.DEFAULT_DEPLOYED_DIRECTORY,
+// 	configFileName:     constantsV1.DEFAULT_CONFIG_FILENAME,
+// 	channelsFileName:   constantsV1.DEFAULT_CHANNELS_FILENAME,
+// 	promotionsFileName: constantsV1.DEFAULT_PROMOTIONS_FILENAME,
+// 	versionsFileName:   constantsV1.DEFAULT_VERSIONS_FILENAME,
+// }
 
 // FilePathConfig manages all filepath related data for the cli
 type FilePathsConfig struct {
@@ -36,16 +35,29 @@ type FilePathsConfig struct {
 	versionsFileName string
 }
 
+// FilePaths returns a new instance of FilePathsConfig
+func FilePaths() *FilePathsConfig {
+	return &FilePathsConfig{
+		path:               constantsV1.DEFAULT_FILEPATH,
+		dirName:            constantsV1.DEFAULT_DEPLOYED_DIRECTORY,
+		configFileName:     constantsV1.DEFAULT_CONFIG_FILENAME,
+		channelsFileName:   constantsV1.DEFAULT_CHANNELS_FILENAME,
+		promotionsFileName: constantsV1.DEFAULT_PROMOTIONS_FILENAME,
+		versionsFileName:   constantsV1.DEFAULT_VERSIONS_FILENAME,
+	}
+}
+
+// SetRootDir sets the root directory and returns *FilePathsConfig
+func (fpc *FilePathsConfig) SetRootDir(rootDir string) *FilePathsConfig {
+	fpc.path = filepath.Join(rootDir, fpc.path)
+	return fpc
+}
+
 func (fpc *FilePathsConfig) GetConfigFileName() string {
 	return fpc.configFileName
 }
 
 func (fpc *FilePathsConfig) GetPath() string {
-	// check if user specified working directory
-	workingDir := os.Getenv(constantsV1.FILEPATH_WORKING_DIR_ENV)
-	if workingDir != "" {
-		return filepath.Join(workingDir, fpc.path)
-	}
 	return fpc.path
 }
 

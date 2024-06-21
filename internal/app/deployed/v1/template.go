@@ -56,7 +56,7 @@ func GenerateGitPromotionTemplate() error {
 
 	gitProvider := templateConfig.GetGitType()
 
-	path := utilsV1.FilePaths.GetGitDirectoryPath(gitProvider)
+	path := utilsV1.FilePaths().GetGitDirectoryPath(gitProvider)
 
 	files, err := os.ReadDir(path)
 	if err != nil {
@@ -65,7 +65,7 @@ func GenerateGitPromotionTemplate() error {
 
 	for _, f := range files {
 		filePath := fmt.Sprintf("%s/%s", path, f.Name())
-		fileDir := utilsV1.FilePaths.GetGitDirectoryOutputPath(gitProvider)
+		fileDir := utilsV1.FilePaths().GetGitDirectoryOutputPath(gitProvider)
 		fileName := strings.TrimSuffix(f.Name(), filepath.Ext(f.Name()))
 		templ, err := template.ParseFiles(filePath)
 		if err != nil {

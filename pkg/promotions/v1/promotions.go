@@ -27,7 +27,7 @@ func (p *Promotions) WriteToFile() error {
 		return err
 	}
 
-	f, err := os.Create(utilsV1.FilePaths.GetPromotionsFilePath())
+	f, err := os.Create(utilsV1.FilePaths().GetPromotionsFilePath())
 	if err != nil {
 		return err
 	}
@@ -45,9 +45,9 @@ func (p *Promotions) WriteToFile() error {
 }
 
 func GetPromotions() (*Promotions, error) {
-	if _, err := os.Stat(utilsV1.FilePaths.GetPromotionsFilePath()); err == nil {
+	if _, err := os.Stat(utilsV1.FilePaths().GetPromotionsFilePath()); err == nil {
 		promotionsConfigFile := &Promotions{}
-		yamlFile, err := os.ReadFile(utilsV1.FilePaths.GetPromotionsFilePath())
+		yamlFile, err := os.ReadFile(utilsV1.FilePaths().GetPromotionsFilePath())
 		if err != nil {
 			return nil, err
 		}
@@ -57,5 +57,5 @@ func GetPromotions() (*Promotions, error) {
 		}
 		return promotionsConfigFile, nil
 	}
-	return nil, fmt.Errorf("Promotions config file does not exists. Make sure the file %s exists", utilsV1.FilePaths.GetPromotionsFilePath())
+	return nil, fmt.Errorf("Promotions config file does not exists. Make sure the file %s exists", utilsV1.FilePaths().GetPromotionsFilePath())
 }

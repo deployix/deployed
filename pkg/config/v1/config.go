@@ -27,7 +27,7 @@ func (c *Config) WriteToFile() error {
 		return err
 	}
 
-	f, err := os.Create(utilsV1.FilePaths.GetConfigFilePath())
+	f, err := os.Create(utilsV1.FilePaths().GetConfigFilePath())
 	if err != nil {
 		return err
 	}
@@ -45,9 +45,9 @@ func (c *Config) WriteToFile() error {
 }
 
 func GetConfig() (*Config, error) {
-	if _, err := os.Stat(utilsV1.FilePaths.GetConfigFilePath()); err == nil {
+	if _, err := os.Stat(utilsV1.FilePaths().GetConfigFilePath()); err == nil {
 		configFile := &Config{}
-		yamlFile, err := os.ReadFile(utilsV1.FilePaths.GetConfigFilePath())
+		yamlFile, err := os.ReadFile(utilsV1.FilePaths().GetConfigFilePath())
 		if err != nil {
 			return nil, err
 		}
@@ -57,6 +57,6 @@ func GetConfig() (*Config, error) {
 		}
 		return configFile, nil
 	}
-	return nil, fmt.Errorf("Config file does not exists. Make sure the file %s exists", utilsV1.FilePaths.GetConfigFilePath())
+	return nil, fmt.Errorf("Config file does not exists. Make sure the file %s exists", utilsV1.FilePaths().GetConfigFilePath())
 
 }

@@ -171,17 +171,17 @@ func initRun(cmd *cobra.Command, args []string) error {
 }
 
 func generateWorkingDir(force bool) error {
-	if _, err := os.Stat(utilsV1.FilePaths.GetDirectoryPath()); err == nil && !force {
+	if _, err := os.Stat(utilsV1.FilePaths().GetDirectoryPath()); err == nil && !force {
 		// Dir exists and we are not forcing the creation
-		return fmt.Errorf("dir %s already exists. Use --force to overwrite", utilsV1.FilePaths.GetDirectoryPath())
+		return fmt.Errorf("dir %s already exists. Use --force to overwrite", utilsV1.FilePaths().GetDirectoryPath())
 	} else {
-		err := os.RemoveAll(utilsV1.FilePaths.GetDirectoryPath())
+		err := os.RemoveAll(utilsV1.FilePaths().GetDirectoryPath())
 		if err != nil {
 			return err
 		}
 	}
 
-	if err := os.Mkdir(utilsV1.FilePaths.GetDirectoryPath(), constantsV1.DEFAULT_DIR_FILEMODE); err != nil {
+	if err := os.Mkdir(utilsV1.FilePaths().GetDirectoryPath(), constantsV1.DEFAULT_DIR_FILEMODE); err != nil {
 		return err
 	}
 
