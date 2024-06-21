@@ -8,16 +8,6 @@ import (
 	constantsV1 "github.com/deployix/deployed/pkg/constants/v1"
 )
 
-// FilePaths handles file paths used by the CLI
-// var FilePaths FilePathsConfig = FilePathsConfig{
-// 	path:               constantsV1.DEFAULT_FILEPATH,
-// 	dirName:            constantsV1.DEFAULT_DEPLOYED_DIRECTORY,
-// 	configFileName:     constantsV1.DEFAULT_CONFIG_FILENAME,
-// 	channelsFileName:   constantsV1.DEFAULT_CHANNELS_FILENAME,
-// 	promotionsFileName: constantsV1.DEFAULT_PROMOTIONS_FILENAME,
-// 	versionsFileName:   constantsV1.DEFAULT_VERSIONS_FILENAME,
-// }
-
 // FilePathConfig manages all filepath related data for the cli
 type FilePathsConfig struct {
 	// path to working directory
