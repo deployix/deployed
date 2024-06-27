@@ -1,7 +1,6 @@
 package v1
 
 import (
-	"fmt"
 	"path/filepath"
 	"strings"
 
@@ -77,13 +76,11 @@ func (fpc *FilePathsConfig) GetConfigFilePath() string {
 }
 
 func (fpc *FilePathsConfig) GetChannelsFilePath() string {
-	filepath.Join()
-	return fmt.Sprintf("%s/%s/%s", fpc.GetPath(), fpc.dirName, fpc.channelsFileName)
+	return filepath.Join(fpc.GetPath(), fpc.dirName, fpc.channelsFileName)
 }
 
 func (fpc *FilePathsConfig) GetPromotionsFilePath() string {
-	filepath.Join()
-	return fmt.Sprintf("%s/%s/%s", fpc.GetPath(), fpc.dirName, fpc.promotionsFileName)
+	return filepath.Join(fpc.GetPath(), fpc.dirName, fpc.promotionsFileName)
 }
 
 func (fpc *FilePathsConfig) GetVersionsFilePath() string {
