@@ -1,7 +1,7 @@
 package v1
 
 const (
-	DEFAULT_FILEPATH        = "."
+	DEFAULT_FILEPATH        = ""
 	DEFAULT_GIT_BRANCH      = "main"
 	DEFAULT_DATETIME_FORMAT = "rubydate"
 
