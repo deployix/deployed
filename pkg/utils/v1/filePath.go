@@ -52,7 +52,7 @@ func (fpc *FilePathsConfig) GetPath() string {
 }
 
 func (fpc *FilePathsConfig) GetDirectoryPath() string {
-	return fmt.Sprintf("%s/%s", fpc.GetPath(), fpc.dirName)
+	return filepath.Join(fpc.GetPath(), fpc.dirName)
 }
 
 func (fpc *FilePathsConfig) GetGitDirectoryPath(gitType string) string {
@@ -69,25 +69,27 @@ func (fpc *FilePathsConfig) GetGitDirectoryOutputPath(gitType string) string {
 	if strings.EqualFold(gitType, "gitlab") {
 		dir = constantsV1.DEFAULT_GITLAB_PIPELINE_DIRECTORY_PATH
 	}
-	return fmt.Sprintf("%s/%s", fpc.GetPath(), dir)
+	return filepath.Join(fpc.GetPath(), dir)
 }
 
 func (fpc *FilePathsConfig) GetConfigFilePath() string {
-	return fmt.Sprintf("%s/%s/%s", fpc.GetPath(), fpc.dirName, fpc.configFileName)
+	return filepath.Join(fpc.GetPath(), fpc.dirName, fpc.configFileName)
 }
 
 func (fpc *FilePathsConfig) GetChannelsFilePath() string {
+	filepath.Join()
 	return fmt.Sprintf("%s/%s/%s", fpc.GetPath(), fpc.dirName, fpc.channelsFileName)
 }
 
 func (fpc *FilePathsConfig) GetPromotionsFilePath() string {
+	filepath.Join()
 	return fmt.Sprintf("%s/%s/%s", fpc.GetPath(), fpc.dirName, fpc.promotionsFileName)
 }
 
 func (fpc *FilePathsConfig) GetVersionsFilePath() string {
-	return fmt.Sprintf("%s/%s/%s", fpc.GetPath(), fpc.dirName, fpc.versionsFileName)
+	return filepath.Join(fpc.GetPath(), fpc.dirName, fpc.versionsFileName)
 }
 
 func (fpc *FilePathsConfig) GetTemplatesDirectoryPath() string {
-	return fmt.Sprintf("%s/%s", fpc.GetPath(), constantsV1.DEFAULT_TEMPLATES_DIRECTORY_PATH)
+	return filepath.Join(fpc.GetPath(), constantsV1.DEFAULT_TEMPLATES_DIRECTORY_PATH)
 }
