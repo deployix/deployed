@@ -13,7 +13,7 @@ import (
 )
 
 func init() {
-	rootCmd.AddCommand(promotion)
+	rootCmd.AddCommand(template)
 }
 
 var template = &cobra.Command{
