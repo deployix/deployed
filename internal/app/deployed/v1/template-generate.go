@@ -12,7 +12,7 @@ import (
 var templateGenerateNames []string
 
 func init() {
-	templateGenerate.Flags().StringArrayP("names", "n", templateGenerateNames, "(required) template names to generate")
+	templateGenerate.Flags().StringArrayVarP(&templateGenerateNames, "names", "n", []string{}, "(required) template names to generate")
 	if err := templateGenerate.MarkFlagRequired("names"); err != nil {
 		fmt.Println(err.Error())
 		os.Exit(1)
