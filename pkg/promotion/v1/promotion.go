@@ -8,12 +8,16 @@ import (
 	utilsV1 "github.com/deployix/deployed/pkg/utils/v1"
 )
 
+// PromotionType is the tyoe of promotion we want (i.e. manual or crontime)
+type PromotionType string
+
 type Promotion struct {
-	Name        string `short:"n" long:"name" yaml:"name"`
-	Description string `short:"d" long:"desc" yaml:"description,omitempty"`
-	FromChannel string `short:"n" long:"name" yaml:"from_channel"`
-	ToChannel   string `short:"n" long:"name" yaml:"to_channel"`
-	Crontime    string `short:"c" long:"crontime" yaml:"crontime"`
+	Name        string        `short:"n" long:"name" yaml:"name"`
+	Type        PromotionType `short:"t" long:"type" yaml:"type"`
+	Description string        `short:"d" long:"desc" yaml:"description,omitempty"`
+	FromChannel string        `short:"n" long:"name" yaml:"from_channel"`
+	ToChannel   string        `short:"n" long:"name" yaml:"to_channel"`
+	Crontime    string        `short:"c" long:"crontime" yaml:"crontime"`
 }
 
 // Promote promotes a promotion

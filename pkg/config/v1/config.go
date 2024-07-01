@@ -8,6 +8,7 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
+// TODO: add a field to allow users to update templates when commands are ran (i.e. list of templateNames stored in config that update template files when other commands are ran)
 type Config struct {
 	ApplicationName string `yaml:"applicationName"`
 	// DateTime format user wants as string

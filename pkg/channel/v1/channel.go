@@ -2,6 +2,7 @@ package v1
 
 import (
 	actionableVersionV1 "github.com/deployix/deployed/pkg/actionableVersion/v1"
+	deployedVersionV1 "github.com/deployix/deployed/pkg/deployedVersion/v1"
 	historyV1 "github.com/deployix/deployed/pkg/history/v1"
 	utilsV1 "github.com/deployix/deployed/pkg/utils/v1"
 )
@@ -9,6 +10,7 @@ import (
 type Channel struct {
 	Description       string                                `yaml:"description,omitempty"`
 	ActionableVersion actionableVersionV1.ActionableVersion `yaml:"actionableVersion"`
+	DeployedVerstion  deployedVersionV1.DeployedVersion     `yaml:"deployedVersion"`
 	History           []historyV1.History
 }
 

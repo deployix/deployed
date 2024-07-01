@@ -64,7 +64,7 @@ func (fpc *FilePathsConfig) GetGitDirectoryPath(gitType string) string {
 
 // GetGitDirectoryOutputPath returns the template output file path
 func (fpc *FilePathsConfig) GetGitDirectoryOutputPath(gitType string) string {
-	dir := constantsV1.DEFAULT_GITLAB_TEMPLATES_DIRECTORY_PATH
+	dir := constantsV1.DEFAULT_GITHUB_ACTIONS_DIRECTORY_PATH
 	if strings.EqualFold(gitType, "gitlab") {
 		dir = constantsV1.DEFAULT_GITLAB_PIPELINE_DIRECTORY_PATH
 	}
