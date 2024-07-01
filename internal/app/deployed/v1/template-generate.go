@@ -2,7 +2,6 @@ package v1
 
 import (
 	"context"
-	"fmt"
 	"os"
 
 	variablesV1 "github.com/deployix/deployed/pkg/variables/v1"
@@ -45,11 +44,10 @@ func TemplateGenerateRun(cmd *cobra.Command, args []string) error {
 
 func TemplateGenerateExecuteGenerateName(ctx context.Context, templateName string, data *TemplateConfig) error {
 	// Get function that maps to template name
-	if _, found := variablesV1.TemplateNamesToFunc[templateName]; !found {
-		return fmt.Errorf("template name '%s' does not exist", templateName)
+	generateFunction, err := variablesV1.GetTemplateFunc(templateName)
+	if err != nil {
+		return err
 	}
 
-	generateFunc := variablesV1.TemplateNamesToFunc[templateName]
-
-	return generateFunc()
+	return generateFunction()
 }
