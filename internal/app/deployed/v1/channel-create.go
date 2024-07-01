@@ -20,6 +20,7 @@ func init() {
 	// create required channel name flag
 	channelsCreate.Flags().StringVarP(&channelsCreateChannelName, "name", "n", "", "(required) channel name")
 	if err := channelsCreate.MarkFlagRequired("name"); err != nil {
+		fmt.Println(err.Error())
 		os.Exit(1)
 	}
 

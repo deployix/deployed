@@ -14,11 +14,13 @@ var channelsHotfixVersion string
 func init() {
 	channelsHotfix.Flags().StringVarP(&channelsHotfixChannelName, "name", "n", "", "(required) channel name to hotfix")
 	if err := channelsHotfix.MarkFlagRequired("name"); err != nil {
+		fmt.Println(err.Error())
 		os.Exit(1)
 	}
 
 	channelsHotfix.Flags().StringVarP(&channelsHotfixVersion, "hotfix-version", "v", "", "(required) channels actionable version to apply")
 	if err := channelsHotfix.MarkFlagRequired("hotfix-version"); err != nil {
+		fmt.Println(err.Error())
 		os.Exit(1)
 	}
 

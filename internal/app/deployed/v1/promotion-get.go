@@ -13,6 +13,7 @@ var promotionGetPromotionName string
 func init() {
 	promotionGet.Flags().StringVarP(&promotionGetPromotionName, "name", "n", "", "(required) promotion name to get")
 	if err := promotionGet.MarkFlagRequired("name"); err != nil {
+		fmt.Println(err.Error())
 		os.Exit(1)
 	}
 

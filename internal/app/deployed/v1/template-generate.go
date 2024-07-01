@@ -2,6 +2,7 @@ package v1
 
 import (
 	"context"
+	"fmt"
 	"os"
 
 	variablesV1 "github.com/deployix/deployed/pkg/variables/v1"
@@ -11,8 +12,9 @@ import (
 var templateGenerateNames []string
 
 func init() {
-	templateGenerate.Flags().StringArrayVar(&templateGenerateNames, "names", []string{}, "(required) template names to generate")
-	if err := promotionUpdate.MarkFlagRequired("names"); err != nil {
+	templateGenerate.Flags().StringArrayP("names", "n", templateGenerateNames, "(required) template names to generate")
+	if err := templateGenerate.MarkFlagRequired("names"); err != nil {
+		fmt.Println(err.Error())
 		os.Exit(1)
 	}
 

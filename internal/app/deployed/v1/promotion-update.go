@@ -19,6 +19,7 @@ var promotionUpdateCrontime string
 func init() {
 	promotionUpdate.Flags().StringVarP(&promotionUpdatePromotionName, "name", "n", "", "(required) promotion name to update")
 	if err := promotionUpdate.MarkFlagRequired("name"); err != nil {
+		fmt.Println(err.Error())
 		os.Exit(1)
 	}
 

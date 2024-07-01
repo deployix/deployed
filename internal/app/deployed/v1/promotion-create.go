@@ -21,24 +21,28 @@ func init() {
 	// create required promotion name flag
 	promoteCreate.Flags().StringVarP(&promotionCreateName, "name", "n", "", "(required) channel name")
 	if err := promoteCreate.MarkFlagRequired("name"); err != nil {
+		fmt.Println(err.Error())
 		os.Exit(1)
 	}
 
 	// create required promotion fromChannel flag
 	promoteCreate.Flags().StringVarP(&promotionCreateFromChannel, "from", "f", "", "(required) channel name you want to promote from")
 	if err := promoteCreate.MarkFlagRequired("from"); err != nil {
+		fmt.Println(err.Error())
 		os.Exit(1)
 	}
 
 	// create required promotion toChannel flag
 	promoteCreate.Flags().StringVarP(&promotionCreateToChannel, "to", "t", "", "(required) channel name you want to promote into")
 	if err := promoteCreate.MarkFlagRequired("to"); err != nil {
+		fmt.Println(err.Error())
 		os.Exit(1)
 	}
 
 	// create required promotion crontime flag
 	promoteCreate.Flags().StringVarP(&promotionCreateCrontime, "crontime", "c", "", "(required) promotion schedule represented as a crontime string")
 	if err := promoteCreate.MarkFlagRequired("crontime"); err != nil {
+		fmt.Println(err.Error())
 		os.Exit(1)
 	}
 

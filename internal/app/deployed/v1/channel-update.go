@@ -14,6 +14,7 @@ var channelsUpdateDescription string
 func init() {
 	channelsUpdate.Flags().StringVarP(&channelsUpdateChannelName, "name", "n", "", "(required) channel name")
 	if err := channelsUpdate.MarkFlagRequired("name"); err != nil {
+		fmt.Println(err.Error())
 		os.Exit(1)
 	}
 

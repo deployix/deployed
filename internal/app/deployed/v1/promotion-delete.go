@@ -14,6 +14,7 @@ var promotionDeleteVerifyPromotion bool
 func init() {
 	promotionDelete.Flags().StringVarP(&promotionDeletePromotionName, "name", "n", "", "(required) promotion name to delete")
 	if err := promotionDelete.MarkFlagRequired("name"); err != nil {
+		fmt.Println(err.Error())
 		os.Exit(1)
 	}
 

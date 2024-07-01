@@ -14,6 +14,7 @@ var channelsDeleteVerifyChannel bool
 func init() {
 	channelsDelete.Flags().StringVarP(&channelsDeleteChannelName, "name", "n", "", "(required) channel name to delete")
 	if err := channelsDelete.MarkFlagRequired("name"); err != nil {
+		fmt.Println(err.Error())
 		os.Exit(1)
 	}
 

@@ -13,6 +13,7 @@ var channelsGetChannelName string
 func init() {
 	channelsGet.Flags().StringVarP(&channelsGetChannelName, "name", "n", "", "(required) channel name")
 	if err := channelsGet.MarkFlagRequired("name"); err != nil {
+		fmt.Println(err.Error())
 		os.Exit(1)
 	}
 	channels.AddCommand(channelsGet)

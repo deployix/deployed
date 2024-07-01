@@ -14,6 +14,7 @@ func init() {
 	// create required promotion name flag
 	promote.Flags().StringVarP(&promotionName, "name", "n", "", "(required) name of the promotion you want to promote")
 	if err := promote.MarkFlagRequired("name"); err != nil {
+		fmt.Println(err.Error())
 		os.Exit(1)
 	}
 
