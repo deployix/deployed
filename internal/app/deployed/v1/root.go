@@ -1,6 +1,8 @@
 package v1
 
 import (
+	"context"
+
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -24,6 +26,7 @@ func initConfig() {
 
 }
 
-func Execute() error {
+func Execute(ctx context.Context) error {
+	rootCmd.SetContext(ctx)
 	return rootCmd.Execute()
 }

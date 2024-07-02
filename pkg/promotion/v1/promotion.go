@@ -1,10 +1,10 @@
 package v1
 
 import (
+	"context"
 	"fmt"
 
 	channelsV1 "github.com/deployix/deployed/pkg/channels/v1"
-	configV1 "github.com/deployix/deployed/pkg/config/v1"
 	utilsV1 "github.com/deployix/deployed/pkg/utils/v1"
 )
 
@@ -20,12 +20,13 @@ type Promotion struct {
 	Crontime    string        `short:"c" long:"crontime" yaml:"crontime"`
 }
 
+type PromoteInput struct {
+	// DateTimeFormat format user wants to use to display datetime
+	DateTimeFormat string `yaml:"dateTimeFormat"`
+}
+
 // Promote promotes a promotion
-func (p *Promotion) Promote() error {
-	config, err := configV1.GetConfig()
-	if err != nil {
-		return err
-	}
+func (p *Promotion) Promote(ctx context.Context, input PromoteInput) error {
 
 	// get toChannel
 	channels, err := channelsV1.GetChannels()
@@ -48,7 +49,7 @@ func (p *Promotion) Promote() error {
 	updatedChannel.AppendActionableVersion(updatedChannel.ActionableVersion)
 
 	updatedChannel.ActionableVersion = channels.Channels[p.FromChannel].ActionableVersion
-	updatedChannel.ActionableVersion.DateTime = utilsV1.GetCurrentDateTimeAsString(utilsV1.DateTimeLayoutFromTypeName(config.DateTimeFormat))
+	updatedChannel.ActionableVersion.DateTime = utilsV1.GetCurrentDateTimeAsString(utilsV1.DateTimeLayoutFromTypeName(input.DateTimeFormat))
 
 	channels.Channels[p.ToChannel] = updatedChannel
 

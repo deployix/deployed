@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"os"
 
@@ -8,7 +9,9 @@ import (
 )
 
 func main() {
-	if err := deployedV1.Execute(); err != nil {
+	ctx := context.Background()
+
+	if err := deployedV1.Execute(ctx); err != nil {
 		fmt.Println(err.Error())
 		os.Exit(1)
 	}

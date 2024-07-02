@@ -20,3 +20,14 @@ func GetTemplateFunc(templateName string) (TemplateNameGenerateFunc, error) {
 
 	return templateNamesToFunc[templateName], nil
 }
+
+// GetTemplateNameList get a list of valid template names
+func GetTemplateNameList() []string {
+	result := []string{}
+
+	for name, _ := range templateNamesToFunc {
+		result = append(result, name)
+	}
+
+	return result
+}
