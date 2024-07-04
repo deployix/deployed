@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 
+	templateV1 "github.com/deployix/deployed/pkg/template/v1"
 	variablesV1 "github.com/deployix/deployed/pkg/variables/v1"
 	"github.com/spf13/cobra"
 )
@@ -18,7 +19,7 @@ func init() {
 		os.Exit(1)
 	}
 
-	template.AddCommand(templateGenerate)
+	templates.AddCommand(templateGenerate)
 }
 
 var templateGenerate = &cobra.Command{
@@ -30,7 +31,7 @@ var templateGenerate = &cobra.Command{
 func TemplateGenerateRun(cmd *cobra.Command, args []string) error {
 	ctx := cmd.Context()
 	// get config data
-	templateConfig, err := NewTemplateConfig()
+	templateConfig, err := templateV1.NewTemplateConfig()
 	if err != nil {
 		return err
 	}
@@ -44,7 +45,7 @@ func TemplateGenerateRun(cmd *cobra.Command, args []string) error {
 	return nil
 }
 
-func TemplateGenerateExecuteGenerateName(ctx context.Context, templateName string, data *TemplateConfig) error {
+func TemplateGenerateExecuteGenerateName(ctx context.Context, templateName string, data *templateV1.TemplateFilesConfig) error {
 	// Get function that maps to template name
 	generateFunction, err := variablesV1.GetTemplateFunc(templateName)
 	if err != nil {

@@ -6,57 +6,26 @@ import (
 	"path/filepath"
 	textTemplate "text/template"
 
-	channelsV1 "github.com/deployix/deployed/pkg/channels/v1"
-	configV1 "github.com/deployix/deployed/pkg/config/v1"
-	promotionsV1 "github.com/deployix/deployed/pkg/promotions/v1"
 	"github.com/spf13/cobra"
 )
 
 func init() {
-	rootCmd.AddCommand(template)
+	rootCmd.AddCommand(templates)
 }
 
-var template = &cobra.Command{
-	Use: "template",
+var templates = &cobra.Command{
+	Use: "templates",
 	Run: templatesRun,
 }
 
 func templatesRun(cmd *cobra.Command, args []string) {
 }
 
-type TemplateConfig struct {
-	Channels   *channelsV1.Channels
-	Config     *configV1.Config
-	Promotions *promotionsV1.Promotions
-}
-
-// GetGitType returns the git provider specified in the config.yml file
-func (tc *TemplateConfig) GetGitType() string {
-	return tc.Config.GitConfig.Provider
-}
-
-func NewTemplateConfig() (*TemplateConfig, error) {
-	channels, err := channelsV1.GetChannels()
-	if err != nil {
-		return nil, err
-	}
-
-	config, err := configV1.GetConfig()
-	if err != nil {
-		return nil, err
-	}
-
-	promotions, err := promotionsV1.GetPromotions()
-	if err != nil {
-		return nil, err
-	}
-
-	return &TemplateConfig{
-		Channels:   channels,
-		Config:     config,
-		Promotions: promotions,
-	}, nil
-}
+// type TemplateConfig struct {
+// 	Channels   *channelsV1.Channels
+// 	Config     *configV1.Config
+// 	Promotions *promotionsV1.Promotions
+// }
 
 // func GenerateGitPromotionTemplate() error {
 // 	templateConfig, err := NewTemplateConfig()

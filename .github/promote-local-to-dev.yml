@@ -1,0 +1,11 @@
+name: deployed
+on: [push]
+jobs:
+  promotedChannel:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: deployix/deployed-github-actions@:
+        if: always()
+        with:
+        

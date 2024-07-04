@@ -8,16 +8,16 @@ import (
 )
 
 func init() {
-	template.AddCommand(templateListNames)
+	templates.AddCommand(templateListNames)
 }
 
 var templateListNames = &cobra.Command{
-	Use:          "list-names",
-	Run:          TemplateListNamesRun,
+	Use:          "list",
+	Run:          TemplateListRun,
 	SilenceUsage: true,
 }
 
-func TemplateListNamesRun(cmd *cobra.Command, args []string) {
+func TemplateListRun(cmd *cobra.Command, args []string) {
 	for _, name := range variablesV1.GetTemplateNameList() {
 		fmt.Println(name)
 	}

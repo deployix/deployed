@@ -1,4 +1,4 @@
-name: {{ .ActionName }}
+name: {{ .Config.ApplicationName }}
 on: [push]
 jobs:
   promotedChannel:
